@@ -26,11 +26,13 @@ public class Event {
     private Publisher publisher;
     @NotNull
     private Integer quantity;
+    private String desc;
 
     @Builder
-    public Event(String name, Publisher publisher, Integer quantity) {
+    public Event(String name, Publisher publisher, Integer quantity, String desc) {
         this.name = name;
         this.publisher = publisher;
         this.quantity = quantity;
+        this.desc = desc;
     }
 }

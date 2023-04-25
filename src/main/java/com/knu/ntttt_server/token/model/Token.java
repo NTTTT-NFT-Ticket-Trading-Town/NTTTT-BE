@@ -38,18 +38,22 @@ public class Token {
 
     @NotNull
     private Long nftId;
+    @NotNull
+    private String owner;
 
     @NotNull
     private PaymentState paymentState = PaymentState.ON_SALE;
 
     @Builder
-    public Token(Event event, Long seq, String imgUrl, Long price, String desc, Long nftId, PaymentState paymentState) {
+    public Token(Event event, Long seq, String imgUrl, Long price,
+                 String desc, Long nftId, String owner, PaymentState paymentState) {
         this.event = event;
         this.seq = seq;
         this.imgUrl = imgUrl;
         this.price = price;
         this.desc = desc;
         this.nftId = nftId;
+        this.owner = owner;
         this.paymentState = paymentState;
     }
 }
