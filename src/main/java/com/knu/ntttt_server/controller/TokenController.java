@@ -16,11 +16,6 @@ public class TokenController {
     this.tokenService = tokenService;
   }
 
-  @GetMapping("/")
-  public String home(){
-    return "home";
-  }
-
   @GetMapping(value="/token/{id}") // 토큰 조회
   public String token(@PathVariable("id") Long tokenId) throws JsonProcessingException {
     TokenDto tokenDto = tokenService.getToken(tokenId);

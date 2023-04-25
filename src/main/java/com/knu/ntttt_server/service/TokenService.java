@@ -19,13 +19,14 @@ public class TokenService {
     Token token = tokenWrapper.get();
     TokenDto tokenDto = TokenDto.builder()
       .id(token.getId())
-      .description(token.getDescription())
+      .desc(token.getDesc())
       .event(token.getEvent())
       .imgUrl(token.getImgUrl())
       .nftId(token.getNftId())
       .paymentState(token.getPaymentState())
       .price(token.getPrice())
       .seq(token.getSeq())
+      .owner(token.getOwner())
       .build();
 
     return tokenDto;

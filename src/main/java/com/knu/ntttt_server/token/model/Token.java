@@ -4,7 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -21,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Token {
-    @Id @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Id @GeneratedValue
     private Long id;
 
     @NotNull
@@ -35,22 +34,26 @@ public class Token {
     private String imgUrl;
     @NotNull
     private Long price;
-    private String description;
+    private String desc;
 
     @NotNull
     private Long nftId;
+    @NotNull
+    private String owner;
 
     @NotNull
     private PaymentState paymentState = PaymentState.ON_SALE;
 
     @Builder
-    public Token(Event event, Long seq, String imgUrl, Long price, String description, Long nftId, PaymentState paymentState) {
+    public Token(Event event, Long seq, String imgUrl, Long price,
+                 String desc, Long nftId, String owner, PaymentState paymentState) {
         this.event = event;
         this.seq = seq;
         this.imgUrl = imgUrl;
         this.price = price;
-        this.description = description;
+        this.desc = desc;
         this.nftId = nftId;
+        this.owner = owner;
         this.paymentState = paymentState;
     }
 }
