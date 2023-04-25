@@ -1,5 +1,6 @@
 package com.knu.ntttt_server.token.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -34,6 +35,7 @@ public class Token {
     private String imgUrl;
     @NotNull
     private Long price;
+    @Column(name="description")
     private String desc;
 
     @NotNull
