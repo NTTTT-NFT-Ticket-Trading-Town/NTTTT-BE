@@ -1,7 +1,7 @@
-package com.knu.ntttt_server.service;
+package com.knu.ntttt_server.token.service;
 
-import com.knu.ntttt_server.dto.TokenDto;
-import com.knu.ntttt_server.repository.TokenRepository;
+import com.knu.ntttt_server.token.dto.TokenDto;
+import com.knu.ntttt_server.token.repository.TokenRepository;
 import com.knu.ntttt_server.token.model.Token;
 import java.util.Optional;
 import org.springframework.stereotype.Service;

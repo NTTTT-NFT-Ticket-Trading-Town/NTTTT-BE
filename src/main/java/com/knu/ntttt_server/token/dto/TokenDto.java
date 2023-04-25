@@ -1,4 +1,4 @@
-package com.knu.ntttt_server.dto;
+package com.knu.ntttt_server.token.dto;
 
 import com.knu.ntttt_server.token.model.Event;
 import com.knu.ntttt_server.token.model.PaymentState;

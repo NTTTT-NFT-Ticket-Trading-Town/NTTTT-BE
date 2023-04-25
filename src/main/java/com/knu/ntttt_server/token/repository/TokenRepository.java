@@ -1,4 +1,4 @@
-package com.knu.ntttt_server.repository;
+package com.knu.ntttt_server.token.repository;
 
 import com.knu.ntttt_server.token.model.Token;
 import org.springframework.data.jpa.repository.JpaRepository;
