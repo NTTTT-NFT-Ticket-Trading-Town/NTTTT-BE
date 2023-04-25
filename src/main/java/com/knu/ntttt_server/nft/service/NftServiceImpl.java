@@ -40,7 +40,7 @@ public class NftServiceImpl implements NftService {
     }
 
     @Override
-    public Long mintNft(CreateNftReq req)  {
+    public Long mintNft(CreateNftReq req) {
         Function f = createMintNftFunction(this.ownerAddress, req.payload());
         String txHash = contractUtils.sendTransaction(f);
         return getNftIdByTxHash(txHash, f);
@@ -69,7 +69,7 @@ public class NftServiceImpl implements NftService {
             throw new RuntimeException("JSON Parsing Error");
         }
         String owner = contractUtils.call(queryOwnerFunction).get(0).toString();
-        return QueryNftRes.from(nftId, owner, payload);
+        return QueryNftRes.of(nftId, owner, payload);
     }
 
     /**

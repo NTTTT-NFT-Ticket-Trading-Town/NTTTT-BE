@@ -14,7 +14,7 @@ public class NftDto {
     }
 
     public record QueryNftRes(Long id, String owner, String imgUrl, String desc) {
-        public static QueryNftRes from(Long id, String owner, Map<String, String> payloads) {
+        public static QueryNftRes of(Long id, String owner, Map<String, String> payloads) {
             return new QueryNftRes(
                     id,
                     owner,
