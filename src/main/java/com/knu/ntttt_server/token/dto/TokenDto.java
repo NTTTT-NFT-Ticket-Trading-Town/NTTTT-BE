@@ -32,9 +32,8 @@ public class TokenDto {
     this.owner = owner;
   }
 
-  public Token toEntity(Event event, Long seq, String imgUrl, Long price, String description,
-      Long nftId, PaymentState paymentState, String owner) {
-    Token token = Token.builder()
+  public Token toEntity() {
+    return Token.builder()
         .event(event)
         .seq(seq)
         .imgUrl(imgUrl)
@@ -44,8 +43,6 @@ public class TokenDto {
         .paymentState(paymentState)
         .owner(owner)
         .build();
-
-    return token;
   }
 
 

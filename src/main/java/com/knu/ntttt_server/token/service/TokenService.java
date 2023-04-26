@@ -5,9 +5,11 @@ import com.knu.ntttt_server.core.response.ResultCode;
 import com.knu.ntttt_server.token.dto.TokenDto;
 import com.knu.ntttt_server.token.repository.TokenRepository;
 import com.knu.ntttt_server.token.model.Token;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class TokenService {
 
   private TokenRepository tokenRepository;

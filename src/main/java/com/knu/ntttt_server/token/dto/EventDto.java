@@ -21,14 +21,12 @@ public class EventDto {
     this.description = description;
   }
 
-  public Event toEntity(String name, Publisher publisher, Integer quantity, String description) {
-    Event event = Event.builder()
+  public Event toEntity() {
+    return Event.builder()
         .name(name)
         .publisher(publisher)
         .quantity(quantity)
         .description(description)
         .build();
-
-    return event;
   }
 }
