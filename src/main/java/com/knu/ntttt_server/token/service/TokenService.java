@@ -15,10 +15,8 @@ public class TokenService {
   private final TokenRepository tokenRepository;
 
   /**
-   * findById로 tokenId인 tokenEntity를 찾음
-   * tokenId에 해당하는 token이 없으면 예외를 던짐
-   * code: 400_001, message: cannot find token
-   * */
+   * tokenId로 token Entity를 찾고 tokenDto로 변환 후 반환
+   */
   public TokenDto getToken(Long tokenId) {
     Token token = tokenRepository.findById(tokenId)
         .orElseThrow(() -> new KnuException(ResultCode.BAD_REQUEST));
@@ -33,6 +31,5 @@ public class TokenService {
         .seq(token.getSeq())
         .owner(token.getOwner())
         .build();
-
   }
 }

@@ -17,15 +17,11 @@ public class TokenController {
   }
 
   /**
-   * PathVariable로 id값을 받고,
-   * 해당 id값을 가지는 token의 tokenDto를
-   * ApiResponse의 data에 실어 반환
-   * */
+   * 요청받은 token 정보를 ApiResponse의 data에 실어 반환
+   */
   @GetMapping(value="/token/{id}")
   public ApiResponse<?> token(@PathVariable("id") Long tokenId) {
     TokenDto tokenDto = tokenService.getToken(tokenId);
     return ApiResponse.ok(tokenDto);
   }
-
-
 }

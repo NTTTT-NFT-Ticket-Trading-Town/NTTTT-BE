@@ -44,6 +44,4 @@ public class TokenDto {
         .owner(owner)
         .build();
   }
-
-
 }
