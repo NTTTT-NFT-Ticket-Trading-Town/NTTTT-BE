@@ -19,7 +19,7 @@ public class TokenService {
    */
   public TokenDto getToken(Long tokenId) {
     Token token = tokenRepository.findById(tokenId)
-        .orElseThrow(() -> new KnuException(ResultCode.BAD_REQUEST));
+        .orElseThrow(() -> new KnuException(ResultCode.BAD_REQUEST, "해당하는 토큰의 id가 존재하지 않습니다."));
     return TokenDto.fromEntity(token);
   }
 }
