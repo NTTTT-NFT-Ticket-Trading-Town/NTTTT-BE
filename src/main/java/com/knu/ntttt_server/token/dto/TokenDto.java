@@ -32,6 +32,20 @@ public class TokenDto {
     this.owner = owner;
   }
 
+  public static TokenDto fromEntity(Token token) {
+    return TokenDto.builder()
+        .id(token.getId())
+        .description(token.getDescription())
+        .event(token.getEvent())
+        .imgUrl(token.getImgUrl())
+        .nftId(token.getNftId())
+        .paymentState(token.getPaymentState())
+        .price(token.getPrice())
+        .seq(token.getSeq())
+        .owner(token.getOwner())
+        .build();
+  }
+
   public Token toEntity() {
     return Token.builder()
         .event(event)
