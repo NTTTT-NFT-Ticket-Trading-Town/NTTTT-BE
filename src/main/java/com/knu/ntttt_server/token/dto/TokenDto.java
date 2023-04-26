@@ -20,7 +20,7 @@ public class TokenDto {
   private String owner;
 
   @Builder
-  public TokenDto(Long id, Event event, Long seq, String imgUrl, Long price, String description, Long nftId, PaymentState paymentState, String owner){
+  public TokenDto(Long id, Event event, Long seq, String imgUrl, Long price, String description, Long nftId, PaymentState paymentState, String owner) {
     this.id = id;
     this.event = event;
     this.seq = seq;
