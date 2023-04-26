@@ -18,6 +18,11 @@ public class TokenService {
     this.tokenRepository = tokenRepository;
   }
 
+  /**
+   * findById로 tokenId인 tokenEntity를 찾음
+   * tokenId에 해당하는 token이 없으면 예외를 던짐
+   * code: 400_001, message: cannot find token
+   * */
   public TokenDto getToken(Long tokenId) {
     Token token = tokenRepository.findById(tokenId)
         .orElseThrow(() -> new KnuException(ResultCode.BAD_REQUEST));
