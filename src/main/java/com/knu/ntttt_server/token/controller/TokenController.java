@@ -2,6 +2,7 @@ package com.knu.ntttt_server.token.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.knu.ntttt_server.core.response.ApiResponse;
 import com.knu.ntttt_server.token.dto.TokenDto;
 import com.knu.ntttt_server.token.service.TokenService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,11 +17,10 @@ public class TokenController {
     this.tokenService = tokenService;
   }
 
-  @GetMapping(value="/token/{id}") // 토큰 조회
-  public String token(@PathVariable("id") Long tokenId) throws JsonProcessingException {
+  @GetMapping(value="/token/{id}")
+  public ApiResponse<?> token(@PathVariable("id") Long tokenId) {
     TokenDto tokenDto = tokenService.getToken(tokenId);
-    ObjectMapper objectMapper = new ObjectMapper();
-    return objectMapper.writeValueAsString(tokenDto);
+    return ApiResponse.ok(tokenDto);
   }
 
 

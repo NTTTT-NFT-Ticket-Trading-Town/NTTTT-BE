@@ -1,9 +1,10 @@
 package com.knu.ntttt_server.token.service;
 
+import com.knu.ntttt_server.core.exception.KnuException;
+import com.knu.ntttt_server.core.response.ResultCode;
 import com.knu.ntttt_server.token.dto.TokenDto;
 import com.knu.ntttt_server.token.repository.TokenRepository;
 import com.knu.ntttt_server.token.model.Token;
-import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,9 +16,8 @@ public class TokenService {
   }
 
   public TokenDto getToken(Long tokenId){
-    Optional<Token> tokenWrapper = tokenRepository.findById(tokenId);
-    Token token = tokenWrapper.get();
-    TokenDto tokenDto = TokenDto.builder()
+    Token token = tokenRepository.findById(tokenId).orElseThrow(() -> new KnuException(ResultCode.BAD_REQUEST));
+    return TokenDto.builder()
       .id(token.getId())
       .desc(token.getDesc())
       .event(token.getEvent())
@@ -28,8 +28,6 @@ public class TokenService {
       .seq(token.getSeq())
       .owner(token.getOwner())
       .build();
-
-    return tokenDto;
 
   }
 }
