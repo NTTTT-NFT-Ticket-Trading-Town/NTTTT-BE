@@ -1,6 +1,7 @@
 package com.knu.ntttt_server.core.response;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.http.HttpStatus;
 
 
@@ -19,6 +20,10 @@ public enum ResultCode {
     ResultCode(HttpStatus httpStatus, int code, String message) {
         this.httpStatus = httpStatus;
         this.code = code;
+        this.message = message;
+    }
+
+    public void setMessage(String message) {
         this.message = message;
     }
 }
