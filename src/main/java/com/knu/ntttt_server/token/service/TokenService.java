@@ -12,11 +12,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class TokenService {
 
-  private TokenRepository tokenRepository;
-
-  public TokenService(TokenRepository tokenRepository) {
-    this.tokenRepository = tokenRepository;
-  }
+  private final TokenRepository tokenRepository;
 
   /**
    * findById로 tokenId인 tokenEntity를 찾음
