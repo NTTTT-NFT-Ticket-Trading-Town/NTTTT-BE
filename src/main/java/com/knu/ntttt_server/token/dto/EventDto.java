@@ -14,6 +14,7 @@ public class EventDto {
               .name(this.name)
               .publisher(this.publisher)
               .description(this.description)
+              .quantity(0)
               .build();
     }
   }
