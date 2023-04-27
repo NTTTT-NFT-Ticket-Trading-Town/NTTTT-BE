@@ -1,2 +1,9 @@
 server:
   port: 8111
+
+nft:
+  server: ${NFT_SERVER}
+  contract:
+    address: ${CONTRACT_ADDR}
+    owner: ${CONTRACT_OWNER}
+

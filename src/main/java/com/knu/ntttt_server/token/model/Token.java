@@ -1,5 +1,6 @@
 package com.knu.ntttt_server.token.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -20,40 +21,42 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Token {
-    @Id @GeneratedValue
-    private Long id;
 
-    @NotNull
-    @ManyToOne @JoinColumn(name = "event_id")
-    @Enumerated(value = EnumType.STRING)
-    private Event event;
-    @NotNull
-    private Long seq;
+  @Id
+  @GeneratedValue
+  private Long id;
 
-    @NotNull
-    private String imgUrl;
-    @NotNull
-    private Long price;
-    private String desc;
+  @NotNull
+  @ManyToOne
+  @JoinColumn(name = "event_id")
+  @Enumerated(value = EnumType.STRING)
+  private Event event;
+  @NotNull
+  private Long seq;
+  @NotNull
+  private String imgUrl;
+  @NotNull
+  private Long price;
+  private String description;
 
-    @NotNull
-    private Long nftId;
-    @NotNull
-    private String owner;
+  @NotNull
+  private Long nftId;
+  @NotNull
+  private String owner;
 
-    @NotNull
-    private PaymentState paymentState = PaymentState.ON_SALE;
+  @NotNull
+  private PaymentState paymentState = PaymentState.ON_SALE;
 
-    @Builder
-    public Token(Event event, Long seq, String imgUrl, Long price,
-                 String desc, Long nftId, String owner, PaymentState paymentState) {
-        this.event = event;
-        this.seq = seq;
-        this.imgUrl = imgUrl;
-        this.price = price;
-        this.desc = desc;
-        this.nftId = nftId;
-        this.owner = owner;
-        this.paymentState = paymentState;
-    }
+  @Builder
+  public Token(Event event, Long seq, String imgUrl, Long price,
+      String description, Long nftId, String owner, PaymentState paymentState) {
+    this.event = event;
+    this.seq = seq;
+    this.imgUrl = imgUrl;
+    this.price = price;
+    this.description = description;
+    this.nftId = nftId;
+    this.owner = owner;
+    this.paymentState = paymentState;
+  }
 }

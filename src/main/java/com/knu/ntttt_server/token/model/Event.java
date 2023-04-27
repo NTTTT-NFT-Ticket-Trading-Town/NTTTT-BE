@@ -17,22 +17,23 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Event {
-    @Id @GeneratedValue
-    private Long id;
 
-    @NotNull
-    private String name;
-    @NotNull
-    private Publisher publisher;
-    @NotNull
-    private Integer quantity;
-    private String desc;
+  @Id
+  @GeneratedValue
+  private Long id;
+  @NotNull
+  private String name;
+  @NotNull
+  private Publisher publisher;
+  @NotNull
+  private Integer quantity;
+  private String description;
 
-    @Builder
-    public Event(String name, Publisher publisher, Integer quantity, String desc) {
-        this.name = name;
-        this.publisher = publisher;
-        this.quantity = quantity;
-        this.desc = desc;
-    }
+  @Builder
+  public Event(String name, Publisher publisher, Integer quantity, String description) {
+    this.name = name;
+    this.publisher = publisher;
+    this.quantity = quantity;
+    this.description = description;
+  }
 }
