@@ -1,6 +1,8 @@
 package com.knu.ntttt_server.token.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
@@ -17,13 +19,11 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Event {
-
-  @Id
-  @GeneratedValue
+  @Id @GeneratedValue
   private Long id;
   @NotNull
   private String name;
-  @NotNull
+  @NotNull @Enumerated(EnumType.STRING)
   private Publisher publisher;
   @NotNull
   private Integer quantity;

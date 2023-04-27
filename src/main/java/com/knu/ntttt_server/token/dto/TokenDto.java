@@ -1,61 +1,41 @@
 package com.knu.ntttt_server.token.dto;
 
+import com.knu.ntttt_server.token.model.Artist;
 import com.knu.ntttt_server.token.model.Event;
-import com.knu.ntttt_server.token.model.PaymentState;
 import com.knu.ntttt_server.token.model.Token;
-import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 public class TokenDto {
+  public record CreateTokenReq(Long eventId, Long artistId, String imgUrl, Long price, String desc) {
+    public CreateTokenReq(Long eventId, Long artistId, String imgUrl, Long price) {
+      this(eventId, artistId, imgUrl, price, "");
+    }
 
-  private Long id;
-  private Event event;
-  private Long seq;
-  private String imgUrl;
-  private Long price;
-  private String description;
-  private Long nftId;
-  private PaymentState paymentState;
-  private String owner;
-
-  @Builder
-  public TokenDto(Long id, Event event, Long seq, String imgUrl, Long price, String description, Long nftId, PaymentState paymentState, String owner) {
-    this.id = id;
-    this.event = event;
-    this.seq = seq;
-    this.imgUrl = imgUrl;
-    this.price = price;
-    this.description = description;
-    this.nftId = nftId;
-    this.paymentState = paymentState;
-    this.owner = owner;
+    /**
+     * 토큰 생성 요청 데이터를 바탕으로 외부에서 연관 객체(혹은 데이터)를 생성
+     * 해당 데이터를 주입받아 Token Entity 를 생성한다
+     */
+    public Token issueToken(Long seq, Artist artist, Event event, Long nfId) {
+      return Token.builder()
+              .imgUrl(this.imgUrl)
+              .price(this.price)
+              .description(this.desc)
+              .artist(artist)
+              .nftId(nfId)
+              .event(event)
+              .seq(seq)
+              .build();
+    }
   }
 
-  public static TokenDto fromEntity(Token token) {
-    return TokenDto.builder()
-        .id(token.getId())
-        .description(token.getDescription())
-        .event(token.getEvent())
-        .imgUrl(token.getImgUrl())
-        .nftId(token.getNftId())
-        .paymentState(token.getPaymentState())
-        .price(token.getPrice())
-        .seq(token.getSeq())
-        .owner(token.getOwner())
-        .build();
-  }
-
-  public Token toEntity() {
-    return Token.builder()
-        .event(event)
-        .seq(seq)
-        .imgUrl(imgUrl)
-        .price(price)
-        .description(description)
-        .nftId(nftId)
-        .paymentState(paymentState)
-        .owner(owner)
-        .build();
+  public record QueryTokenRes(Long id, String imgUrl,
+                              Long price, String desc,
+                              Long nftId, String owner) {
+    public QueryTokenRes(Token token, String owner) {
+      this(token.getId(), token.getImgUrl(),
+              token.getPrice(), token.getDescription(),
+              token.getNftId(), owner);
+    }
   }
 }

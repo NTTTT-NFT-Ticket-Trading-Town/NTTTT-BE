@@ -1,9 +1,6 @@
 package com.knu.ntttt_server.token.model;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -21,42 +18,38 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Token {
-
-  @Id
-  @GeneratedValue
+  @Id @GeneratedValue
   private Long id;
 
-  @NotNull
-  @ManyToOne
+  @NotNull @ManyToOne
   @JoinColumn(name = "event_id")
-  @Enumerated(value = EnumType.STRING)
   private Event event;
   @NotNull
   private Long seq;
   @NotNull
   private String imgUrl;
+
+  @ManyToOne @NotNull
+  private Artist artist;
+  
   @NotNull
   private Long price;
   private String description;
 
   @NotNull
   private Long nftId;
-  @NotNull
-  private String owner;
 
   @NotNull
   private PaymentState paymentState = PaymentState.ON_SALE;
 
   @Builder
-  public Token(Event event, Long seq, String imgUrl, Long price,
-      String description, Long nftId, String owner, PaymentState paymentState) {
+  public Token(Event event, Long seq, String imgUrl, Artist artist, Long price, String description, Long nftId) {
     this.event = event;
     this.seq = seq;
     this.imgUrl = imgUrl;
+    this.artist = artist;
     this.price = price;
     this.description = description;
     this.nftId = nftId;
-    this.owner = owner;
-    this.paymentState = paymentState;
   }
 }
