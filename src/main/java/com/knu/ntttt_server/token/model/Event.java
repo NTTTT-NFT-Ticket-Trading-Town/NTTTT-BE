@@ -19,7 +19,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Event {
-
   @Id @GeneratedValue
   private Long id;
   @NotNull
