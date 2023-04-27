@@ -6,9 +6,3 @@ nft:
   contract:
     address: ${CONTRACT_ADDR}
     owner: ${CONTRACT_OWNER}
-
----
-
-spring:
-  profiles:
-    active: local
