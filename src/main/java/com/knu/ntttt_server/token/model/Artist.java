@@ -1,5 +1,6 @@
 package com.knu.ntttt_server.token.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -14,6 +15,7 @@ public class Artist {
     @Id @GeneratedValue
     private Long id;
 
+    @Column(name = "group_name")
     @Enumerated(EnumType.STRING)
     private Group group;
 
