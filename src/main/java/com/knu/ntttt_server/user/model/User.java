@@ -1,4 +1,4 @@
-package com.knu.ntttt_server.token.model;
+package com.knu.ntttt_server.user.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,15 +20,15 @@ public class User {
     @NotNull
     private String walletAddr;
     @NotNull
-    private String nickName;
+    private String nickname;
     @NotNull
     private String phoneNumber;
 
     @Builder
-    public User(Long id, String walletAddr, String nickName, String phoneNumber) {
+    public User(Long id, String walletAddr, String nickname, String phoneNumber) {
         this.id = id;
         this.walletAddr = walletAddr;
-        this.nickName = nickName;
+        this.nickname = nickname;
         this.phoneNumber = phoneNumber;
     }
 }
