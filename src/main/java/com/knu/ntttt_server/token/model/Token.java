@@ -1,6 +1,5 @@
 package com.knu.ntttt_server.token.model;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -44,8 +43,7 @@ public class Token {
   private PaymentState paymentState = PaymentState.ON_SALE;
 
   @Builder
-  public Token(Event event, Long seq, String imgUrl, Artist artist, Long price, String description, Long nftId,
-               PaymentState paymentState) {
+  public Token(Event event, Long seq, String imgUrl, Artist artist, Long price, String description, Long nftId) {
     this.event = event;
     this.seq = seq;
     this.imgUrl = imgUrl;
@@ -53,6 +51,5 @@ public class Token {
     this.price = price;
     this.description = description;
     this.nftId = nftId;
-    this.paymentState = paymentState;
   }
 }
