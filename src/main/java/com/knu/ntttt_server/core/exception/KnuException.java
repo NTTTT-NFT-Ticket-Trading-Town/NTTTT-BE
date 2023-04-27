@@ -13,7 +13,6 @@ public class KnuException extends RuntimeException {
         this.resultCode = resultCode;
     }
 
-
     public KnuException(String message) {
         super(message);
         this.resultCode.setMessage(message);
