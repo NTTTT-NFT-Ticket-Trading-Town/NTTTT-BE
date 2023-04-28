@@ -7,10 +7,12 @@ import com.knu.ntttt_server.user.dto.UserDto;
 import com.knu.ntttt_server.user.model.User;
 import com.knu.ntttt_server.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -28,11 +30,11 @@ public class UserService {
         }
         User user = dto.toEntity();
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
-        userRepository.save(dto.toEntity());
+        userRepository.save(user);
     }
 
     /**
-     * 로그인 가입 기능입니다.
+     * 로그인 기능입니다.
      * todo: JWT 토큰 연결 (현재는 nickname 반환)
      */
     public String login(LoginDto dto) {
