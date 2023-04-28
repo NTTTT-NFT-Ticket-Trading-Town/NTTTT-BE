@@ -1,6 +1,7 @@
 package com.knu.ntttt_server.user.dto;
 
 import com.knu.ntttt_server.user.model.User;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
@@ -10,12 +11,14 @@ public class UserDto {
     private final String walletAddr;
     private final String nickname;
     private final String phoneNumber;
+    private final String password;
 
-    public UserDto(Long id, String walletAddr, String nickname, String phoneNumber) {
+    public UserDto(Long id, String walletAddr, String nickname, String phoneNumber, String password) {
         this.id = id;
         this.walletAddr = walletAddr;
         this.nickname = nickname;
         this.phoneNumber = phoneNumber;
+        this.password = password;
     }
 
     public User toEntity() {
@@ -24,6 +27,7 @@ public class UserDto {
                 .walletAddr(walletAddr)
                 .nickname(nickname)
                 .phoneNumber(phoneNumber)
+                .password(password)
                 .build();
     }
 }

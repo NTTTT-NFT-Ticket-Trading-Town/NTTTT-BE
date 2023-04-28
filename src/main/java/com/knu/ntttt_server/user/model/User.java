@@ -27,10 +27,11 @@ public class User {
     private String phoneNumber;
 
     @Builder
-    public User(Long id, String walletAddr, String nickname, String phoneNumber) {
+    public User(Long id, String walletAddr, String nickname, String password, String phoneNumber) {
         this.id = id;
         this.walletAddr = walletAddr;
         this.nickname = nickname;
+        this.password = password;
         this.phoneNumber = phoneNumber;
     }
 }
