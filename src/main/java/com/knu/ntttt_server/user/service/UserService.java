@@ -3,7 +3,6 @@ package com.knu.ntttt_server.user.service;
 import com.knu.ntttt_server.core.exception.KnuException;
 import com.knu.ntttt_server.core.response.ResultCode;
 import com.knu.ntttt_server.user.dto.UserDto;
-import com.knu.ntttt_server.user.model.User;
 import com.knu.ntttt_server.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
