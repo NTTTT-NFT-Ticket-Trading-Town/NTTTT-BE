@@ -1,7 +1,6 @@
 package com.knu.ntttt_server.token.controller;
 
 import com.knu.ntttt_server.core.response.ApiResponse;
-import com.knu.ntttt_server.token.dto.TokenDto;
 import com.knu.ntttt_server.token.dto.TokenDto.QueryTokenRes;
 import com.knu.ntttt_server.token.service.TokenService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +20,7 @@ public class TokenController {
    */
   @GetMapping(value="/token/{id}")
   public ApiResponse<?> token(@PathVariable("id") Long tokenId) {
-    QueryTokenRes tokenDto = tokenService.queryToken(tokenId);
+    QueryTokenRes tokenDto = tokenService.findBy(tokenId);
     return ApiResponse.ok(tokenDto);
   }
 }
