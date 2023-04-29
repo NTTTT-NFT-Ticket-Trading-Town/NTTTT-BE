@@ -5,7 +5,7 @@ import com.knu.ntttt_server.token.model.Group;
 import java.util.List;
 
 public interface ArtistService {
-    Artist queryBy(Long artistId);
-    List<Artist> queryAll();
-    List<Artist> queryAllBy(Group group);
+    Artist findBy(Long artistId);
+    List<Artist> findAll();
+    List<Artist> findAllBy(Group group);
 }

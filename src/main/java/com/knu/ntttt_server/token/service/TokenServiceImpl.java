@@ -29,8 +29,8 @@ public class TokenServiceImpl implements TokenService {
      */
     @Transactional
     public Token createToken(CreateTokenReq req) {
-        Event event = eventService.queryBy(req.eventId());
-        Artist artist = artistService.queryBy(req.artistId());
+        Event event = eventService.findBy(req.eventId());
+        Artist artist = artistService.findBy(req.artistId());
         Long nftId = issueNft(req);
 
         Token token = req.issueToken(getSequence(event), artist, event, nftId);
@@ -41,7 +41,7 @@ public class TokenServiceImpl implements TokenService {
      * 서버 DB 에 저장된 토큰 메타데이터 + 블록체인에 저장된 NFT 데이터를 반환
      */
     @Override
-    public QueryTokenRes queryToken(Long tokenId) {
+    public QueryTokenRes findBy(Long tokenId) {
         Token token = tokenRepository.findById(tokenId)
                 .orElseThrow(() -> new RuntimeException("존재하지 않는 토큰입니다"));
         QueryNftRes res = nftService.queryNft(token.getNftId());
@@ -49,12 +49,12 @@ public class TokenServiceImpl implements TokenService {
     }
 
     @Override
-    public List<QueryTokenRes> queryAllBy(Long eventId) {
+    public List<QueryTokenRes> findAllBy(Long eventId) {
         List<QueryTokenRes> res = new ArrayList<>();
 
         List<Token> tokens = tokenRepository.queryAllByEvent_Id(eventId);
         for (Token t : tokens) {
-            res.add(queryToken(t.getId()));
+            res.add(findBy(t.getId()));
         }
         return res;
     }

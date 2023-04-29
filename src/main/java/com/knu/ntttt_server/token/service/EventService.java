@@ -6,5 +6,5 @@ import com.knu.ntttt_server.token.model.Event;
 public interface EventService {
     Event createEvent(CreateEventReq event);
 
-    Event queryBy(Long eventId);
+    Event findBy(Long eventId);
 }

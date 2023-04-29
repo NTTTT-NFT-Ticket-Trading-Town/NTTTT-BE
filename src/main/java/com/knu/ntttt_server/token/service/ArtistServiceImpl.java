@@ -14,18 +14,18 @@ public class ArtistServiceImpl implements ArtistService{
     private final ArtistRepository artistRepository;
 
     @Override
-    public Artist queryBy(Long artistId) {
+    public Artist findBy(Long artistId) {
         return artistRepository.findById(artistId)
                 .orElseThrow(() -> new KnuException("존재하지 않는 아티스트입니다"));
     }
 
     @Override
-    public List<Artist> queryAll() {
+    public List<Artist> findAll() {
         return artistRepository.findAll();
     }
 
     @Override
-    public List<Artist> queryAllBy(Group group) {
+    public List<Artist> findAllBy(Group group) {
         return artistRepository.findAllByGroup(group);
     }
 }

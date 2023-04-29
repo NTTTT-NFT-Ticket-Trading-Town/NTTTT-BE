@@ -8,7 +8,7 @@ import java.util.List;
 public interface TokenService {
     Token createToken(CreateTokenReq req);
 
-    List<QueryTokenRes> queryAllBy(Long eventId);
+    List<QueryTokenRes> findAllBy(Long eventId);
 
-    QueryTokenRes queryToken(Long tokenId);
+    QueryTokenRes findBy(Long tokenId);
 }

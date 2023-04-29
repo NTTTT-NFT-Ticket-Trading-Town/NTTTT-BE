@@ -20,7 +20,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Event queryBy(Long eventId) {
+    public Event findBy(Long eventId) {
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new KnuException("요청 이벤트(콜렉션) 을 찾을 수 없습니다."));
         return event;
