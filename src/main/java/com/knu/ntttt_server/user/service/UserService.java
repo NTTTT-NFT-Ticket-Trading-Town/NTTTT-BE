@@ -28,8 +28,7 @@ public class UserService {
         if (userRepository.existsByNickname(dto.getNickname())) {
             throw new KnuException(ResultCode.BAD_REQUEST, "아이디가 중복입니다.");
         }
-        User user = dto.toEntity();
-        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        User user = dto.toEntityWithEncode(passwordEncoder);
         userRepository.save(user);
     }
 

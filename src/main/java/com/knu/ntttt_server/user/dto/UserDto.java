@@ -1,8 +1,8 @@
 package com.knu.ntttt_server.user.dto;
 
 import com.knu.ntttt_server.user.model.User;
-import lombok.Builder;
 import lombok.Getter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter
 public class UserDto {
@@ -21,13 +21,23 @@ public class UserDto {
         this.password = password;
     }
 
-    public User toEntity() {
+    public User toEntityWithEncode() {
         return User.builder()
                 .id(id)
                 .walletAddr(walletAddr)
                 .nickname(nickname)
                 .phoneNumber(phoneNumber)
                 .password(password)
+                .build();
+    }
+
+    public User toEntityWithEncode(PasswordEncoder passwordEncoder) {
+        return User.builder()
+                .id(id)
+                .walletAddr(walletAddr)
+                .nickname(nickname)
+                .phoneNumber(phoneNumber)
+                .password(passwordEncoder.encode(password))
                 .build();
     }
 }
