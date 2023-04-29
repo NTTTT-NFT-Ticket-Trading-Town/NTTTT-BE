@@ -18,7 +18,6 @@ public class TokenController {
   }
 
   /**
-   * 요청받은 token 정보를 ApiResponse의 data에 실어 반환
    */
   @GetMapping(value="/token/{id}")
   public ApiResponse<?> token(@PathVariable("id") Long tokenId) {
