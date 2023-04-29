@@ -28,6 +28,7 @@ public class PaymentServiceImpl implements PaymentService {
    * 사용자 지갑 주소로 token 전송
    */
   @Override
+  @Transactional
   public Long purchase(String userWalletAddress, Long tokenId) {
     Token token = getToken(tokenId);
     nftService.transferNft(userWalletAddress, token.getNftId());
@@ -39,7 +40,6 @@ public class PaymentServiceImpl implements PaymentService {
    * 토큰 paymentState를 SOLD_OUT으로 변경
    */
   @Override
-  @Transactional
   public void updatePaymentState(Token token) {
     token.updatePaymentState(PaymentState.SOLD_OUT);
     tokenRepository.save(token);
