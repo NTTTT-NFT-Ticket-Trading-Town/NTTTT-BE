@@ -7,9 +7,12 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Artist {
     @Id @GeneratedValue
@@ -21,8 +24,12 @@ public class Artist {
 
     private String name;
 
-    public Artist(Group group, String name) {
+    private String imgUrl; //대표 이미지 주소
+
+    @Builder
+    public Artist(Group group, String name, String imgUrl) {
         this.group = group;
         this.name = name;
+        this.imgUrl = imgUrl;
     }
 }

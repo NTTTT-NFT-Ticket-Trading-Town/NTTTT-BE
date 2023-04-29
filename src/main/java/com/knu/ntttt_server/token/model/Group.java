@@ -1,7 +1,7 @@
 package com.knu.ntttt_server.token.model;
 
 public enum Group {
-    Aespa(Publisher.SM);
+    BTS(Publisher.HIVE), Aespa(Publisher.SM);
 
     public Publisher publisher;
 
