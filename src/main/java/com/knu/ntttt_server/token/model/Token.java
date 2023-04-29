@@ -52,4 +52,8 @@ public class Token {
     this.description = description;
     this.nftId = nftId;
   }
+
+  public void updatePaymentState(PaymentState paymentState) {
+    this.paymentState = paymentState;
+  }
 }
