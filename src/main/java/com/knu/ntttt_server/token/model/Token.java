@@ -52,4 +52,8 @@ public class Token {
     this.description = description;
     this.nftId = nftId;
   }
+
+  public void soldOut() {
+    this.paymentState = PaymentState.SOLD_OUT;
+  }
 }
