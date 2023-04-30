@@ -53,7 +53,7 @@ public class Token {
     this.nftId = nftId;
   }
 
-  public void updatePaymentState(PaymentState paymentState) {
-    this.paymentState = paymentState;
+  public void soldOut() {
+    this.paymentState = PaymentState.SOLD_OUT;
   }
 }
