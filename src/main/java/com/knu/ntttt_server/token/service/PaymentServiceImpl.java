@@ -3,7 +3,6 @@ package com.knu.ntttt_server.token.service;
 import com.knu.ntttt_server.core.exception.KnuException;
 import com.knu.ntttt_server.core.response.ResultCode;
 import com.knu.ntttt_server.nft.service.NftService;
-import com.knu.ntttt_server.token.model.PaymentState;
 import com.knu.ntttt_server.token.model.Token;
 import com.knu.ntttt_server.token.repository.TokenRepository;
 import jakarta.transaction.Transactional;
@@ -40,9 +39,8 @@ public class PaymentServiceImpl implements PaymentService {
   /**
    * 토큰 paymentState를 SOLD_OUT으로 변경
    */
-  @Override
-  public void updatePaymentState(Token token) {
-    token.updatePaymentState(PaymentState.SOLD_OUT);
+  private void updatePaymentState(Token token) {
+    token.soldOut();
     tokenRepository.save(token);
   }
 }
