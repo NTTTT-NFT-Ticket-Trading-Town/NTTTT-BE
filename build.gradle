@@ -27,7 +27,6 @@ dependencies {
 
     //swagger springdoc
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
-    //implementation group: 'org.springdoc', name: 'springdoc-openapi-security', version: '7.01.'1.6.13
 
     //spring security
     implementation "org.springframework.boot:spring-boot-starter-security"
