@@ -6,6 +6,7 @@ nft:
   contract:
     address: ${CONTRACT_ADDR}
     owner: ${CONTRACT_OWNER}
+
 spring:
   jackson:
     property-naming-strategy: SNAKE_CASE  # request body snake case -> camel case
