@@ -45,4 +45,13 @@ public class UserService {
 
         return dto.getNickname();
     }
+
+    /**
+     * 유저 닉네임으로 지갑 주소를 찾는 기능입니다.
+     */
+    public String getWalletAddress(String nickname) {
+        User user = userRepository.findByNickname(nickname)
+            .orElseThrow(() -> new KnuException(ResultCode.INTERNAL_SERVER_ERROR, "서버에서 문제가 발생하여 요청을 처리할 수 없습니다. 잠시 후 다시 시도해주세요."));
+        return user.getWalletAddr();
+    }
 }
