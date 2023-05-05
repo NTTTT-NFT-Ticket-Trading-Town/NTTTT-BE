@@ -6,6 +6,18 @@ nft:
   contract:
     address: ${CONTRACT_ADDR}
     owner: ${CONTRACT_OWNER}
+
 spring:
   jackson:
     property-naming-strategy: SNAKE_CASE  # request body snake case -> camel case
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method #태그 내 각 api의 정렬 기준
+    disable-swagger-default-url: true #swagger-ui default url인 petstore html 문서 비활성화 여부
+    display-request-duration: true # try it out 을 했을 때 request duration 을 추가로 찍어줌
+  api-docs:
+    path: /api-docs
+  show-actuator: true # display spring-boot-actuator endpoints
+#  paths-to-match: # 아직 버전을 나누지 않음
+#    - /v1/**
