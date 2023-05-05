@@ -51,7 +51,7 @@ public class UserService {
      */
     public String getWalletAddress(String nickname) {
         User user = userRepository.findByNickname(nickname)
-            .orElseThrow(() -> new KnuException(ResultCode.INTERNAL_SERVER_ERROR, "서버에서 문제가 발생하여 요청을 처리할 수 없습니다. 잠시 후 다시 시도해주세요."));
+            .orElseThrow(() -> new KnuException(ResultCode.BAD_REQUEST, "해당 닉네임의 유저를 찾을 수 없습니다"));
         return user.getWalletAddr();
     }
 }
