@@ -1,5 +1,6 @@
 package com.knu.ntttt_server.token.service;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.knu.ntttt_server.token.model.Event;
@@ -24,5 +25,10 @@ public class EventServiceImpl implements EventService {
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new KnuException("요청 이벤트(콜렉션) 을 찾을 수 없습니다."));
         return event;
+    }
+
+    @Override
+    public List<Event> findAll() {
+        return eventRepository.findAll();
     }
 }
