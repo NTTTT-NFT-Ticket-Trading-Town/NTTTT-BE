@@ -13,34 +13,34 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class PaymentServiceImpl implements PaymentService {
 
-  private final NftService nftService;
-  private final TokenRepository tokenRepository;
+    private final NftService nftService;
+    private final TokenRepository tokenRepository;
 
-  /**
-   * tokenID를 가진 token 찾기
-   */
-  Token getToken(Long tokenId) {
-    return tokenRepository.findById(tokenId)
-        .orElseThrow(() -> new KnuException(ResultCode.BAD_REQUEST, "존재하지 않는 토큰입니다."));
-  }
+    /**
+     * tokenID를 가진 token 찾기
+     */
+    Token getToken(Long tokenId) {
+        return tokenRepository.findById(tokenId)
+            .orElseThrow(() -> new KnuException(ResultCode.BAD_REQUEST, "존재하지 않는 토큰입니다."));
+    }
 
-  /**
-   * 사용자 지갑 주소로 token 전송
-   */
-  @Override
-  @Transactional
-  public Long purchase(String userWalletAddress, Long tokenId) {
-    Token token = getToken(tokenId);
-    nftService.transferNft(userWalletAddress, token.getNftId());
-    this.updatePaymentState(token);
-    return token.getId();
-  }
+    /**
+     * 사용자 지갑 주소로 token 전송
+     */
+    @Override
+    @Transactional
+    public Long purchase(String userWalletAddress, Long tokenId) {
+        Token token = getToken(tokenId);
+        nftService.transferNft(userWalletAddress, token.getNftId());
+        this.updatePaymentState(token);
+        return token.getId();
+    }
 
-  /**
-   * 토큰 paymentState를 SOLD_OUT으로 변경
-   */
-  private void updatePaymentState(Token token) {
-    token.soldOut();
-    tokenRepository.save(token);
-  }
+    /**
+     * 토큰 paymentState를 SOLD_OUT으로 변경
+     */
+    private void updatePaymentState(Token token) {
+        token.soldOut();
+        tokenRepository.save(token);
+    }
 }
