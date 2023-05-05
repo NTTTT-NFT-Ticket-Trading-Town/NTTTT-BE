@@ -20,16 +20,15 @@ public class PaymentController {
   private final UserService userService;
 
   /**
-   * 결제 페이지에서 결제 버튼 클릭
+   * 결제 페이지에서 결제 버튼을 클릭하면 토큰을 구매할 수 있다.
    */
   @PostMapping("/payment")
-  public ApiResponse<?> paymentButton(@RequestBody Map<String,Long> param, Principal principal) {
+  public ApiResponse<?> purchaseToken(@RequestBody Map<String,Long> param, Principal principal) {
     if (principal == null) {
       return ApiResponse.error(new KnuException(ResultCode.BAD_REQUEST, "로그인을 해주세요"));
-    } else {
-      String nickname = principal.getName();
-      Long purchasedToken = paymentService.purchase(userService.getWalletAddress(nickname), param.get("id"));
-      return ApiResponse.ok(purchasedToken);
     }
+    String nickname = principal.getName();
+    Long purchasedToken = paymentService.purchase(userService.getWalletAddress(nickname), param.get("id"));
+    return ApiResponse.ok(purchasedToken);
   }
 }
