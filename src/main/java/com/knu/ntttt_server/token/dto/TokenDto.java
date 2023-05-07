@@ -3,6 +3,8 @@ package com.knu.ntttt_server.token.dto;
 import com.knu.ntttt_server.token.model.Artist;
 import com.knu.ntttt_server.token.model.Event;
 import com.knu.ntttt_server.token.model.Token;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import lombok.Getter;
 
 @Getter
@@ -16,7 +18,7 @@ public class TokenDto {
      * 토큰 생성 요청 데이터를 바탕으로 외부에서 연관 객체(혹은 데이터)를 생성
      * 해당 데이터를 주입받아 Token Entity 를 생성한다
      */
-    public Token issueToken(Long seq, Artist artist, Event event, Long nfId) {
+    public Token issueToken(Integer seq, Artist artist, Event event, Long nfId) {
       return Token.builder()
               .imgUrl(this.imgUrl)
               .price(this.price)
@@ -25,16 +27,17 @@ public class TokenDto {
               .nftId(nfId)
               .event(event)
               .seq(seq)
+              .publishedAt(LocalDateTime.now(ZoneId.of("Asia/Seoul")))
               .build();
     }
   }
 
-  public record QueryTokenRes(Long id, String imgUrl,
+  public record QueryTokenRes(Event event, Long id, String imgUrl, Integer seq,
                               Long price, String desc,
                               Long nftId, String owner) {
     public QueryTokenRes(Token token, String owner) {
-      this(token.getId(), token.getImgUrl(),
-              token.getPrice(), token.getDescription(),
+      this(token.getEvent(), token.getId(), token.getImgUrl(),
+              token.getSeq(), token.getPrice(), token.getDescription(),
               token.getNftId(), owner);
     }
   }

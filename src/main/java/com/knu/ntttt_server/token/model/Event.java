@@ -36,4 +36,9 @@ public class Event {
     this.quantity = quantity;
     this.description = description;
   }
+
+  //TODO(토큰 발행 시퀀스 관리 로직 리팩토링)
+  public Integer getQuantity() {
+    return quantity++;
+  }
 }

@@ -62,9 +62,8 @@ public class TokenServiceImpl implements TokenService {
 
     //이벤트의 가장 최신 시퀀스 번호를 불러온다
     //TODO(토큰 발행 시퀀스 관리 로직 리팩토링)
-    static Long seq = 0L;
-    private Long getSequence(Event event) {
-        return seq++;
+    private Integer getSequence(Event event) {
+        return event.getQuantity();
     }
 
     private Long issueNft(CreateTokenReq req) {

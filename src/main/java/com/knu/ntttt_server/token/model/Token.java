@@ -6,6 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,7 +26,7 @@ public class Token {
   @JoinColumn(name = "event_id")
   private Event event;
   @NotNull
-  private Long seq;
+  private Integer seq;
   @NotNull
   private String imgUrl;
 
@@ -42,8 +43,11 @@ public class Token {
   @NotNull
   private PaymentState paymentState = PaymentState.ON_SALE;
 
+  @NotNull
+  private LocalDateTime publishedAt;
+
   @Builder
-  public Token(Event event, Long seq, String imgUrl, Artist artist, Long price, String description, Long nftId) {
+  public Token(Event event, Integer seq, String imgUrl, Artist artist, Long price, String description, Long nftId, LocalDateTime publishedAt){
     this.event = event;
     this.seq = seq;
     this.imgUrl = imgUrl;
@@ -51,6 +55,7 @@ public class Token {
     this.price = price;
     this.description = description;
     this.nftId = nftId;
+    this.publishedAt = publishedAt;
   }
 
   public void soldOut() {
