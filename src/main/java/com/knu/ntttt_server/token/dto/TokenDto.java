@@ -18,7 +18,7 @@ public class TokenDto {
      * 토큰 생성 요청 데이터를 바탕으로 외부에서 연관 객체(혹은 데이터)를 생성
      * 해당 데이터를 주입받아 Token Entity 를 생성한다
      */
-    public Token issueToken(Integer seq, Artist artist, Event event, Long nfId) {
+    public Token issueToken(Integer seq, Artist artist, Event event, Long nfId, String owner) {
       return Token.builder()
               .imgUrl(this.imgUrl)
               .price(this.price)
@@ -28,6 +28,7 @@ public class TokenDto {
               .event(event)
               .seq(seq)
               .publishedAt(LocalDateTime.now(ZoneId.of("Asia/Seoul")))
+              .owner(owner)
               .build();
     }
   }
