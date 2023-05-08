@@ -65,4 +65,11 @@ public class Token {
   public void soldOut() {
     this.paymentState = PaymentState.SOLD_OUT;
   }
+
+  /**
+   * 토큰 소유자 변경
+   */
+  public void changeOwner(String newWalletAddr) {
+    this.owner = newWalletAddr;
+  }
 }

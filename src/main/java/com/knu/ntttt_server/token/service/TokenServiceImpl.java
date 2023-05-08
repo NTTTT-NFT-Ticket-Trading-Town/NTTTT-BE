@@ -48,6 +48,7 @@ public class TokenServiceImpl implements TokenService {
         Token token = tokenRepository.findById(tokenId)
                 .orElseThrow(() -> new RuntimeException("존재하지 않는 토큰입니다"));
         QueryNftRes res = nftService.queryNft(token.getNftId());
+        this.changeOwner(res.owner(), token.getOwner(), token);
         return new QueryTokenRes(token, res.owner());
     }
 
@@ -72,5 +73,13 @@ public class TokenServiceImpl implements TokenService {
     private Long issueNft(CreateTokenReq req) {
         CreateNftReq nftReq = new CreateNftReq(req.imgUrl(), req.desc());
         return nftService.mintNft(nftReq);
+    }
+
+    // 블록체인에 저장된 소유자 지갑 주소와 데이터베이스에 저장된 소유자 지갑 주소가 다른 경우 데이터베이스 갱신
+    private void changeOwner(String nftAddr, String databaseAddr, Token token) {
+        if (!nftAddr.equals(databaseAddr)) {
+            token.changeOwner(nftAddr);
+            tokenRepository.save(token);
+        }
     }
 }
