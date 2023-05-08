@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "Token")
@@ -37,7 +38,7 @@ public class TokenController {
 
   @PostMapping("/token")
   @Operation(summary = "토큰 생성", description = "토큰을 생성합니다.")
-  public ApiResponse<Token> createToken(CreateTokenReq req) {
+  public ApiResponse<Token> createToken(@RequestBody CreateTokenReq req) {
     return ApiResponse.ok(tokenService.createToken(req));
   }
 }
