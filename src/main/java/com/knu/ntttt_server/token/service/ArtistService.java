@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface ArtistService {
     Artist findBy(Long artistId);
+
     List<Artist> findAll();
-    List<Artist> findAllBy(Group group);
+
+    List<Artist> findAllBy(Group group, String name);
 }
