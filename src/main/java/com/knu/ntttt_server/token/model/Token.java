@@ -49,8 +49,11 @@ public class Token {
   @NotNull
   private LocalDateTime publishedAt;
 
+  @NotNull
+  private String owner;
+
   @Builder
-  public Token(Event event, Integer seq, String imgUrl, String ratio, Artist artist, Long price, String description, Long nftId, LocalDateTime publishedAt){
+  public Token(Event event, Integer seq, String imgUrl, String ratio, Artist artist, Long price, String description, Long nftId, LocalDateTime publishedAt, String owner){
     this.event = event;
     this.seq = seq;
     this.imgUrl = imgUrl;
@@ -60,9 +63,17 @@ public class Token {
     this.description = description;
     this.nftId = nftId;
     this.publishedAt = publishedAt;
+    this.owner = owner;
   }
 
   public void soldOut() {
     this.paymentState = PaymentState.SOLD_OUT;
+  }
+
+  /**
+   * 토큰 소유자 변경
+   */
+  public void changeOwner(String newWalletAddr) {
+    this.owner = newWalletAddr;
   }
 }

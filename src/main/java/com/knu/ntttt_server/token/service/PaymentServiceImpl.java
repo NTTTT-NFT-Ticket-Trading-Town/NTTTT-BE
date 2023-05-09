@@ -33,6 +33,7 @@ public class PaymentServiceImpl implements PaymentService {
         Token token = getToken(tokenId);
         nftService.transferNft(userWalletAddress, token.getNftId());
         this.updatePaymentState(token);
+        this.changeOwner(token, userWalletAddress);
         return token.getId();
     }
 
@@ -41,6 +42,14 @@ public class PaymentServiceImpl implements PaymentService {
      */
     private void updatePaymentState(Token token) {
         token.soldOut();
+        tokenRepository.save(token);
+    }
+
+    /**
+     * 토큰 구매 시 토큰 owner를 변경
+     */
+    private void changeOwner(Token token, String newWalletAddr) {
+        token.changeOwner(newWalletAddr);
         tokenRepository.save(token);
     }
 }
