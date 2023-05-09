@@ -36,11 +36,11 @@ public class TokenDto {
 
   public record QueryTokenRes(Event event, Long id, Image image, Integer seq,
                               Long price, String desc,
-                              Long nftId, String owner) {
+                              Long nftId, Artist artist, String owner) {
     public QueryTokenRes(Token token, String owner) {
       this(token.getEvent(), token.getId(), new Image(token.getImgUrl(), token.getRatio()),
               token.getSeq(), token.getPrice(), token.getDescription(),
-              token.getNftId(), owner);
+              token.getNftId(), token.getArtist(), owner);
     }
   }
 }
