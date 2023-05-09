@@ -1,8 +1,7 @@
 chmod +x gradlew
 ./gradlew bootJar
-docker-compose build
-#환경변수 가져오기
 source .env
+docker build --platform linux/amd64 -t pove2019/ntttt:${IMAGE_TAG} .
 docker push pove2019/ntttt:${IMAGE_TAG}
 
 
