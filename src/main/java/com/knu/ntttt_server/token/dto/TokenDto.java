@@ -2,6 +2,7 @@ package com.knu.ntttt_server.token.dto;
 
 import com.knu.ntttt_server.token.model.Artist;
 import com.knu.ntttt_server.token.model.Event;
+import com.knu.ntttt_server.token.model.Image;
 import com.knu.ntttt_server.token.model.Token;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -9,9 +10,9 @@ import lombok.Getter;
 
 @Getter
 public class TokenDto {
-  public record CreateTokenReq(Long eventId, Long artistId, String imgUrl, Long price, String desc) {
+  public record CreateTokenReq(Long eventId, Long artistId, String imgUrl, String ratio, Long price, String desc) {
     public CreateTokenReq(Long eventId, Long artistId, String imgUrl, Long price) {
-      this(eventId, artistId, imgUrl, price, "");
+      this(eventId, artistId, imgUrl, "", price, "");
     }
 
     /**
@@ -21,6 +22,7 @@ public class TokenDto {
     public Token issueToken(Integer seq, Artist artist, Event event, Long nfId) {
       return Token.builder()
               .imgUrl(this.imgUrl)
+              .ratio(this.ratio)
               .price(this.price)
               .description(this.desc)
               .artist(artist)
@@ -32,11 +34,11 @@ public class TokenDto {
     }
   }
 
-  public record QueryTokenRes(Event event, Long id, String imgUrl, Integer seq,
+  public record QueryTokenRes(Event event, Long id, Image image, Integer seq,
                               Long price, String desc,
                               Long nftId, String owner) {
     public QueryTokenRes(Token token, String owner) {
-      this(token.getEvent(), token.getId(), token.getImgUrl(),
+      this(token.getEvent(), token.getId(), new Image(token.getImgUrl(), token.getRatio()),
               token.getSeq(), token.getPrice(), token.getDescription(),
               token.getNftId(), owner);
     }
