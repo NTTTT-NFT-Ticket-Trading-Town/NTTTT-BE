@@ -9,11 +9,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
+@Entity(name = "USER_TABLE")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
-    //Todo: 프로필, 배경사진, 패스워드
+    //Todo: 프로필, 배경사진
     @Id
     @GeneratedValue
     private Long id;
