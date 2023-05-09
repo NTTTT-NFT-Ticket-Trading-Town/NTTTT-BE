@@ -26,10 +26,13 @@ public class Artist {
 
     private String imgUrl; //대표 이미지 주소
 
+    private String ratio;
+
     @Builder
-    public Artist(Group group, String name, String imgUrl) {
+    public Artist(Group group, String name, String imgUrl, String ratio) {
         this.group = group;
         this.name = name;
         this.imgUrl = imgUrl;
+        this.ratio = ratio;
     }
 }

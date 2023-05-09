@@ -30,6 +30,9 @@ public class Token {
   @NotNull
   private String imgUrl;
 
+  @NotNull
+  private String ratio = " ";
+
   @ManyToOne @NotNull
   private Artist artist;
   
@@ -47,10 +50,11 @@ public class Token {
   private LocalDateTime publishedAt;
 
   @Builder
-  public Token(Event event, Integer seq, String imgUrl, Artist artist, Long price, String description, Long nftId, LocalDateTime publishedAt){
+  public Token(Event event, Integer seq, String imgUrl, String ratio, Artist artist, Long price, String description, Long nftId, LocalDateTime publishedAt){
     this.event = event;
     this.seq = seq;
     this.imgUrl = imgUrl;
+    this.ratio = ratio;
     this.artist = artist;
     this.price = price;
     this.description = description;
