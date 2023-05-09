@@ -9,7 +9,6 @@ import com.knu.ntttt_server.token.model.Artist;
 import com.knu.ntttt_server.token.model.Event;
 import com.knu.ntttt_server.token.model.Token;
 import com.knu.ntttt_server.token.repository.TokenRepository;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +25,7 @@ public class TokenServiceImpl implements TokenService {
 
     private final TokenRepository tokenRepository;
     @Value("${nft.contract.owner}")
-    BigInteger ownerAddress;
+    String ownerAddress;
 
     /**
      * 특정 이벤트의 토큰을 발행한다
@@ -36,7 +35,7 @@ public class TokenServiceImpl implements TokenService {
         Event event = eventService.findBy(req.eventId());
         Artist artist = artistService.findBy(req.artistId());
         Long nftId = issueNft(req);
-        Token token = req.issueToken(getSequence(event), artist, event, nftId, "0x"+ownerAddress.toString(16));
+        Token token = req.issueToken(getSequence(event), artist, event, nftId, ownerAddress);
         return tokenRepository.save(token);
     }
 
