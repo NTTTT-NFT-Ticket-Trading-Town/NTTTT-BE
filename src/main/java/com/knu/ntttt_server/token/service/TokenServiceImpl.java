@@ -43,11 +43,12 @@ public class TokenServiceImpl implements TokenService {
      * 서버 DB 에 저장된 토큰 메타데이터 + 블록체인에 저장된 NFT 데이터를 반환
      */
     @Override
+    @Transactional
     public QueryTokenRes findBy(Long tokenId) {
         Token token = tokenRepository.findById(tokenId)
                 .orElseThrow(() -> new RuntimeException("존재하지 않는 토큰입니다"));
         QueryNftRes res = nftService.queryNft(token.getNftId());
-        this.changeOwner(res.owner(), token.getOwner(), token);
+        this.syncTokenWithNft(res, token);
         return new QueryTokenRes(token, res.owner());
     }
 
@@ -75,10 +76,7 @@ public class TokenServiceImpl implements TokenService {
     }
 
     // 블록체인에 저장된 소유자 지갑 주소와 데이터베이스에 저장된 소유자 지갑 주소가 다른 경우 데이터베이스 갱신
-    private void changeOwner(String nftAddr, String databaseAddr, Token token) {
-        if (!nftAddr.equals(databaseAddr)) {
-            token.changeOwner(nftAddr);
-            tokenRepository.save(token);
-        }
+    private void syncTokenWithNft(QueryNftRes nft, Token token) {
+        token.changeOwner(nft.owner());
     }
 }
