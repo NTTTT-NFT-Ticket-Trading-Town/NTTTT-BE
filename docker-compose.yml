@@ -1,0 +1,18 @@
+# docker-compose.yml
+  version: '3'
+  services:
+    app:
+      platform: linux/amd64
+      build: .
+      image: pove2019/ntttt:${IMAGE_TAG}
+      network_mode: host
+      # ports:
+      #   - "8112:8112"
+      environment:
+        DB_URL: ${DB_URL}
+        DB_USERNAME: ${DB_USERNAME}
+        DB_PASSWORD: ${DB_PASSWORD}
+        NET_SERVER: ${NET_SERVER}
+        CONTRACT_ADDR: ${CONTRACT_ADDR}
+        CONTRACT_OWNER: ${CONTRACT_OWNER}
+        SPRING_PROFILES_ACTIVE: dev
