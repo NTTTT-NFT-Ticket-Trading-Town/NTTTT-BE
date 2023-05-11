@@ -1,12 +1,13 @@
 package com.knu.ntttt_server.user.security;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.SignatureException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.xml.bind.DatatypeConverter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -16,6 +17,7 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.Date;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class JwtService {
@@ -62,10 +64,32 @@ public class JwtService {
      * @return
      */
     public String parseTokenFromRequest(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
+        String bearerToken = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7, bearerToken.length());
         }
         return null;
+    }
+
+    // token 유효성 검증
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parserBuilder()
+                    .setSigningKey(Base64.getEncoder().encode(secretKey.getBytes()))
+                    .build()
+                    .parseClaimsJws(token);
+            return true;
+        } catch (MalformedJwtException ex) {
+            log.info("Invalid JWT token");
+        } catch (ExpiredJwtException ex) {
+            log.info("Expired JWT token");
+        } catch (UnsupportedJwtException ex) {
+            log.info("Unsupported JWT token");
+        } catch (IllegalArgumentException ex) {
+            log.info("JWT claims string is empty.");
+        } catch (SignatureException ex) {
+            log.info("the claimsJws JWS signature validation fails");
+        }
+        return false;
     }
 }
