@@ -19,5 +19,4 @@ class JwtServiceTest {
         String token = jwtService.createToken("nickName");
         System.out.println(jwtService.getSubject(token));
     }
-
 }
