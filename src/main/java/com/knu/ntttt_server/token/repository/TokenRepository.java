@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TokenRepository extends JpaRepository<Token, Long> {
     List<Token> queryAllByEvent_Id(Long id);
+    List<Token> queryAllByOwner(String walletAddress);
 }

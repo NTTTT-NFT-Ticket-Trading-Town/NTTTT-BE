@@ -11,4 +11,6 @@ public interface TokenService {
     List<QueryTokenRes> findAllBy(Long eventId);
 
     QueryTokenRes findBy(Long tokenId);
+
+    List<QueryTokenRes> findAllBy(String nickname);
 }
