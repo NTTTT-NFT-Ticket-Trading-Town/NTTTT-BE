@@ -6,6 +6,7 @@ import com.knu.ntttt_server.user.dto.LoginDto;
 import com.knu.ntttt_server.user.dto.UserDto;
 import com.knu.ntttt_server.user.model.User;
 import com.knu.ntttt_server.user.repository.UserRepository;
+import com.knu.ntttt_server.user.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +20,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     /**
      * 회원 가입 기능입니다.
@@ -42,8 +44,7 @@ public class UserService {
         if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
             throw new KnuException(ResultCode.BAD_REQUEST, "로그인 정보를 잘못 입력하셨습니다.");
         }
-
-        return dto.getNickname();
+        return jwtService.createToken(dto.getNickname());
     }
 
     /**

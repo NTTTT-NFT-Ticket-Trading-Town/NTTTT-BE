@@ -19,5 +19,8 @@ springdoc:
   api-docs:
     path: /api-docs
   show-actuator: true # display spring-boot-actuator endpoints
+value:
+  jwt:
+    secret-key: ${SECRET_KEY}
 #  paths-to-match: # 아직 버전을 나누지 않음
 #    - /v1/**
