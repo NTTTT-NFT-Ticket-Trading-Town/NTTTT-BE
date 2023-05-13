@@ -37,7 +37,7 @@ public class UserArtistService {
     }
 
     /**
-     * user가 선택한 artist 조회
+     * user가 선택한 artist의 이름 조회
      */
     public List<ChosenArtistRes> findChosenArtist(String nickname) {
         User user = userRepository.findByNickname(nickname)
