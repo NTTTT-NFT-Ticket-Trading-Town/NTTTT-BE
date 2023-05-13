@@ -4,6 +4,7 @@ import com.knu.ntttt_server.core.exception.KnuException;
 import com.knu.ntttt_server.core.response.ResultCode;
 import com.knu.ntttt_server.token.model.Artist;
 import com.knu.ntttt_server.user.dto.UserArtistDto.ChooseArtistReq;
+import com.knu.ntttt_server.user.dto.UserArtistDto.ChosenArtistRes;
 import com.knu.ntttt_server.user.model.User;
 import com.knu.ntttt_server.user.model.UserArtist;
 import com.knu.ntttt_server.user.repository.UserArtistRepository;
@@ -33,5 +34,20 @@ public class UserArtistService {
             userArtistList.add(new ChooseArtistReq(user, artist).createUserArtistPair());
         }
         userArtistRepository.saveAll(userArtistList);
+    }
+
+    /**
+     * user가 선택한 artist 조회
+     */
+    public List<ChosenArtistRes> findChosenArtist(String nickname) {
+        User user = userRepository.findByNickname(nickname)
+            .orElseThrow(() -> new KnuException(ResultCode.BAD_REQUEST, "해당 닉네임의 유저가 존재하지 않습니다."));
+        List<UserArtist> userArtistList = userArtistRepository.findAllByUserId(user.getId());
+
+        List<ChosenArtistRes> artistResList = new ArrayList<>();
+        for (UserArtist userArtist : userArtistList) {
+            artistResList.add(new ChosenArtistRes(userArtist.getArtist()));
+        }
+        return artistResList;
     }
 }
