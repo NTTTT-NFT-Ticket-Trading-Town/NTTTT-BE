@@ -8,7 +8,7 @@ public class UserArtistDto {
 
     public record ChooseArtistReq(User user, Artist artist) {
 
-        public UserArtist createUserArtistPair() {
+        public UserArtist toEntity() {
 
             return UserArtist.builder()
                 .user(user)

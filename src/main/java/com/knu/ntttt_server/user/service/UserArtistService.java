@@ -31,7 +31,7 @@ public class UserArtistService {
             .orElseThrow(() -> new KnuException(ResultCode.BAD_REQUEST, "해당 닉네임의 유저를 찾을 수 없습니다"));
         List<UserArtist> userArtistList = new ArrayList<>();
         for (Artist artist : artistList) {
-            userArtistList.add(new ChooseArtistReq(user, artist).createUserArtistPair());
+            userArtistList.add(new ChooseArtistReq(user, artist).toEntity());
         }
         userArtistRepository.saveAll(userArtistList);
     }
