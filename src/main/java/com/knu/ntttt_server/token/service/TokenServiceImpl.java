@@ -3,7 +3,7 @@ package com.knu.ntttt_server.token.service;
 import com.knu.ntttt_server.nft.dto.NftDto.CreateNftReq;
 import com.knu.ntttt_server.nft.dto.NftDto.QueryNftRes;
 import com.knu.ntttt_server.nft.service.NftService;
-import com.knu.ntttt_server.token.dto.TokenDto.CreateTokenReq;
+import com.knu.ntttt_server.token.dto.TokenDto.TokenReq;
 import com.knu.ntttt_server.token.dto.TokenDto.QueryTokenRes;
 import com.knu.ntttt_server.token.model.Artist;
 import com.knu.ntttt_server.token.model.Event;
@@ -31,7 +31,7 @@ public class TokenServiceImpl implements TokenService {
      * 특정 이벤트의 토큰을 발행한다
      */
     @Transactional
-    public Token createToken(CreateTokenReq req) {
+    public Token createToken(TokenReq req) {
         Event event = eventService.findBy(req.eventId());
         Artist artist = artistService.findBy(req.artistId());
         Long nftId = issueNft(req);
@@ -70,7 +70,7 @@ public class TokenServiceImpl implements TokenService {
         return event.getQuantity();
     }
 
-    private Long issueNft(CreateTokenReq req) {
+    private Long issueNft(TokenReq req) {
         CreateNftReq nftReq = new CreateNftReq(req.imgUrl(), req.desc());
         return nftService.mintNft(nftReq);
     }
