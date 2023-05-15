@@ -1,13 +1,18 @@
 package com.knu.ntttt_server.user.controller;
 
 import com.knu.ntttt_server.core.annotation.CurrentUser;
+import com.knu.ntttt_server.core.exception.KnuException;
 import com.knu.ntttt_server.core.response.ApiResponse;
+import com.knu.ntttt_server.core.response.ResultCode;
+import com.knu.ntttt_server.user.dto.UserArtistDto.ChooseArtistReq;
 import com.knu.ntttt_server.user.dto.LoginDto;
+import com.knu.ntttt_server.user.dto.UserArtistDto.ChosenArtistRes;
 import com.knu.ntttt_server.user.dto.UserDto;
+import com.knu.ntttt_server.user.service.UserArtistService;
 import com.knu.ntttt_server.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.Getter;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+    private final UserArtistService userArtistService;
 
     @Operation(summary = "회원가입")
     @PostMapping("/join")
@@ -41,6 +47,16 @@ public class UserController {
             return ApiResponse.ok(user.getUsername());
         }
 
+        return ApiResponse.ok();
+    }
+
+    @Operation(summary = "아티스트 선택")
+    @PostMapping("/artist")
+    public ApiResponse<?> choose(@RequestBody List<ChooseArtistReq> artistList, @CurrentUser User user) {
+        if (user == null) {
+            return ApiResponse.error(new KnuException(ResultCode.BAD_REQUEST, "로그인을 해주세요"));
+        }
+        userArtistService.chooseArtist(artistList, user.getUsername());
         return ApiResponse.ok();
     }
 }
