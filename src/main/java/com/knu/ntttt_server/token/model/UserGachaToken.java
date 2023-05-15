@@ -14,6 +14,8 @@ import java.time.LocalDate;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserGachaToken {
 
+    private static final int DEFAULT_CHANCE_NUMBER = 5;
+
     @Id
     @GeneratedValue
     private Long id;
@@ -30,4 +32,6 @@ public class UserGachaToken {
 
     @NotNull
     private LocalDate date;
+
+    private int chance = DEFAULT_CHANCE_NUMBER;
 }
