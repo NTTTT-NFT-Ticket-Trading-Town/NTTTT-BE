@@ -33,7 +33,7 @@ public class UserGachaToken {
     private Token token;
 
     @NotNull
-    private LocalDate date;
+    private LocalDate date = LocalDate.now();
 
     private int chance = DEFAULT_CHANCE_NUMBER;
 
