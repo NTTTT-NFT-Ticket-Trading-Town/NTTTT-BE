@@ -54,6 +54,8 @@ public class GachaServiceImpl implements GachaService {
     @Override
     @Transactional
     public TokenDto.TokenRes playGacha(String username) {
+        log.info("[Gacha]: " + username + " play Gacha");
+
         User user = userRepository.findByNickname(username).orElseThrow(() -> new KnuException("유저가 존재하지 않습니다"));
 
         Optional<UserGachaToken> userGachaTokenOptional = userGachaTokenRepository.findByUserAndDate(user, LocalDate.now());
@@ -66,6 +68,7 @@ public class GachaServiceImpl implements GachaService {
 
         //가차를 처음 돌렸는지?
         if (userGachaTokenOptional.isEmpty()) {
+            log.info("[Gacha]: " + username + " get First Gacha token id: {}", randomToken.getId());
             UserGachaToken userGachaToken = new UserGachaToken(user, randomToken);
             userGachaTokenRepository.save(userGachaToken);
             return new TokenDto.TokenRes(randomToken);
@@ -77,6 +80,7 @@ public class GachaServiceImpl implements GachaService {
             throw new KnuException(ResultCode.GACHA_CHANCE_OVER);
         }
 
+        log.info("[Gacha]: " + username + " get Gacha token id: {}", randomToken.getId());
         userGachaToken.playGacha(randomToken);
         return new TokenDto.TokenRes(randomToken);
     }
