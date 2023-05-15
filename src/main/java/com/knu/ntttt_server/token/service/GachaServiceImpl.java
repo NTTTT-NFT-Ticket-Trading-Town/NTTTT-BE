@@ -77,11 +77,7 @@ public class GachaServiceImpl implements GachaService {
             throw new KnuException(ResultCode.GACHA_CHANCE_OVER);
         }
 
-        log.error("유저가차 횟수 +" + userGachaToken.getChance());
-
         userGachaToken.playGacha(randomToken);
-        log.error("유저가차 횟수 +" + userGachaToken.getChance());
-
         return new TokenDto.TokenRes(randomToken);
     }
 }
