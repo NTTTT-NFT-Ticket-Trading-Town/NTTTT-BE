@@ -19,7 +19,7 @@ public class UserGachaToken {
     private static final int DEFAULT_CHANCE_NUMBER = 5;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
