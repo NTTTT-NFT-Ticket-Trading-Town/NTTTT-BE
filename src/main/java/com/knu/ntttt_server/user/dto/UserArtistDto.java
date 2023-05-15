@@ -6,7 +6,9 @@ import com.knu.ntttt_server.user.model.UserArtist;
 
 public class UserArtistDto {
 
-    public record ChooseArtistReq(User user, Artist artist) {
+    public record ChooseArtistReq(Long artistId) {}
+
+    public record UserArtistReq(User user, Artist artist) {
 
         public UserArtist toEntity() {
 

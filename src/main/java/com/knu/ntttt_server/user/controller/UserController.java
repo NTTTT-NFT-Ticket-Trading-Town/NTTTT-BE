@@ -4,8 +4,9 @@ import com.knu.ntttt_server.core.annotation.CurrentUser;
 import com.knu.ntttt_server.core.exception.KnuException;
 import com.knu.ntttt_server.core.response.ApiResponse;
 import com.knu.ntttt_server.core.response.ResultCode;
-import com.knu.ntttt_server.token.model.Artist;
+import com.knu.ntttt_server.user.dto.UserArtistDto.ChooseArtistReq;
 import com.knu.ntttt_server.user.dto.LoginDto;
+import com.knu.ntttt_server.user.dto.UserArtistDto.ChosenArtistRes;
 import com.knu.ntttt_server.user.dto.UserDto;
 import com.knu.ntttt_server.user.service.UserArtistService;
 import com.knu.ntttt_server.user.service.UserService;
@@ -51,7 +52,7 @@ public class UserController {
 
     @Operation(summary = "아티스트 선택")
     @PostMapping("/artist")
-    public ApiResponse<?> choose(@RequestBody List<Artist> artistList, @CurrentUser User user) {
+    public ApiResponse<?> choose(@RequestBody List<ChooseArtistReq> artistList, @CurrentUser User user) {
         if (user == null) {
             return ApiResponse.error(new KnuException(ResultCode.BAD_REQUEST, "로그인을 해주세요"));
         }
