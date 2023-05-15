@@ -11,7 +11,6 @@ import lombok.Getter;
 @Getter
 public class TokenDto {
 
-  @Builder
   public record TokenReq(Long eventId, Long artistId, String imgUrl, String ratio, Long price, String desc) {
     public TokenReq(Long eventId, Long artistId, String imgUrl, Long price) {
       this(eventId, artistId, imgUrl, "", price, "");
@@ -37,13 +36,14 @@ public class TokenDto {
     }
   }
 
-  public record QueryTokenRes(Event event, Long id, Image image, Integer seq,
-                              Long price, String desc,
-                              Long nftId, Artist artist, String owner) {
-    public QueryTokenRes(Token token, String owner) {
+  @Builder
+  public record TokenRes(Event event, Long id, Image image, Integer seq,
+                         Long price, String desc,
+                         Long nftId, Artist artist, String owner) {
+    public TokenRes(Token token) {
       this(token.getEvent(), token.getId(), new Image(token.getImgUrl(), token.getRatio()),
               token.getSeq(), token.getPrice(), token.getDescription(),
-              token.getNftId(), token.getArtist(), owner);
+              token.getNftId(), token.getArtist(), token.getOwner());
     }
   }
 }

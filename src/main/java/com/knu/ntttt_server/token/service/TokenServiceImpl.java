@@ -4,7 +4,7 @@ import com.knu.ntttt_server.nft.dto.NftDto.CreateNftReq;
 import com.knu.ntttt_server.nft.dto.NftDto.QueryNftRes;
 import com.knu.ntttt_server.nft.service.NftService;
 import com.knu.ntttt_server.token.dto.TokenDto.TokenReq;
-import com.knu.ntttt_server.token.dto.TokenDto.QueryTokenRes;
+import com.knu.ntttt_server.token.dto.TokenDto.TokenRes;
 import com.knu.ntttt_server.token.model.Artist;
 import com.knu.ntttt_server.token.model.Event;
 import com.knu.ntttt_server.token.model.Token;
@@ -44,17 +44,17 @@ public class TokenServiceImpl implements TokenService {
      */
     @Override
     @Transactional
-    public QueryTokenRes findBy(Long tokenId) {
+    public TokenRes findBy(Long tokenId) {
         Token token = tokenRepository.findById(tokenId)
                 .orElseThrow(() -> new RuntimeException("존재하지 않는 토큰입니다"));
         QueryNftRes res = nftService.queryNft(token.getNftId());
         this.syncTokenWithNft(res, token);
-        return new QueryTokenRes(token, res.owner());
+        return new TokenRes(token);
     }
 
     @Override
-    public List<QueryTokenRes> findAllBy(Long eventId) {
-        List<QueryTokenRes> res = new ArrayList<>();
+    public List<TokenRes> findAllBy(Long eventId) {
+        List<TokenRes> res = new ArrayList<>();
 
         List<Token> tokens = tokenRepository.queryAllByEvent_Id(eventId);
         for (Token t : tokens) {
