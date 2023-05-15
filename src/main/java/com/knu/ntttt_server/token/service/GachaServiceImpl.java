@@ -30,6 +30,13 @@ public class GachaServiceImpl implements GachaService {
     private final UserGachaTokenRepository userGachaTokenRepository;
     private final TokenRepository tokenRepository;
 
+
+    /**
+     * 유저의 가챠 토큰을 가져옵니다
+     * 만약 오늘 가차토큰을 돌리지 않았다면 가챠를 한번 돌린 후 데이터를 가져옵니다.
+     * @param username
+     * @return
+     */
     @Override
     @Transactional
     public TokenDto.TokenRes getGachaToken(String username) {
@@ -51,6 +58,14 @@ public class GachaServiceImpl implements GachaService {
         return new TokenDto.TokenRes(userGachaTokenOptional.get().getToken());
     }
 
+    /**
+     *
+     * 가챠를 플레이합니다
+     * 유저는 오늘 가챠를 할 기회가 남아있다면 유저가 선택한 아티스트의 토큰 중 하나를 볼 수 있습니다.
+     * 가챠를 플레이할 때마다 기회는 감소합니다.
+     * @param username: 유저의 닉네임
+     * @return tokenRes: 해당 가챠 랜덤 토큰 정보
+     */
     @Override
     @Transactional
     public TokenDto.TokenRes playGacha(String username) {
