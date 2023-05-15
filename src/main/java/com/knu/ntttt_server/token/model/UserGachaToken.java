@@ -28,5 +28,6 @@ public class UserGachaToken {
     @JoinColumn(name = "token_id")
     private Token token;
 
+    @NotNull
     private LocalDate date;
 }
