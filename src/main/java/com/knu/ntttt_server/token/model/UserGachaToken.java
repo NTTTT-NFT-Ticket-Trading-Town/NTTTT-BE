@@ -11,6 +11,7 @@ import java.time.LocalDate;
 
 @Entity
 @Getter
+@Table(name = "USER_GACHA_TOKEN", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "date"})})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserGachaToken {
 
