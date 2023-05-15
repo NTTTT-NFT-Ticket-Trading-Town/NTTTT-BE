@@ -1,10 +1,6 @@
 package com.knu.ntttt_server.token.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
@@ -44,6 +40,7 @@ public class Token {
   private Long nftId;
 
   @NotNull
+  @Enumerated(EnumType.STRING)
   private PaymentState paymentState = PaymentState.ON_SALE;
 
   @NotNull
