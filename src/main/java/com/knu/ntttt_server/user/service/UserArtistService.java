@@ -3,8 +3,10 @@ package com.knu.ntttt_server.user.service;
 import com.knu.ntttt_server.core.exception.KnuException;
 import com.knu.ntttt_server.core.response.ResultCode;
 import com.knu.ntttt_server.token.model.Artist;
+import com.knu.ntttt_server.token.service.ArtistService;
 import com.knu.ntttt_server.user.dto.UserArtistDto.ChooseArtistReq;
 import com.knu.ntttt_server.user.dto.UserArtistDto.ChosenArtistRes;
+import com.knu.ntttt_server.user.dto.UserArtistDto.UserArtistReq;
 import com.knu.ntttt_server.user.model.User;
 import com.knu.ntttt_server.user.model.UserArtist;
 import com.knu.ntttt_server.user.repository.UserArtistRepository;
@@ -22,16 +24,18 @@ public class UserArtistService {
 
     private final UserRepository userRepository;
     private final UserArtistRepository userArtistRepository;
+    private final ArtistService artistService;
 
     /**
      * user가 선호하는 artist를 선택하는 기능입니다.
      */
-    public void chooseArtist(List<Artist> artistList, String nickname) {
+    public void chooseArtist(List<ChooseArtistReq> artistIdList, String nickname) {
         User user = userRepository.findByNickname(nickname)
             .orElseThrow(() -> new KnuException(ResultCode.BAD_REQUEST, "해당 닉네임의 유저를 찾을 수 없습니다"));
         List<UserArtist> userArtistList = new ArrayList<>();
-        for (Artist artist : artistList) {
-            userArtistList.add(new ChooseArtistReq(user, artist).toEntity());
+        for (ChooseArtistReq chooseArtistReq : artistIdList) {
+            Artist artist = artistService.findBy(chooseArtistReq.artistId());
+            userArtistList.add(new UserArtistReq(user, artist).toEntity());
         }
         userArtistRepository.saveAll(userArtistList);
     }
