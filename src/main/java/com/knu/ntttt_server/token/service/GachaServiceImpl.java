@@ -30,6 +30,12 @@ public class GachaServiceImpl implements GachaService {
     private final UserGachaTokenRepository userGachaTokenRepository;
     private final TokenRepository tokenRepository;
 
+    /**
+     * 유저의 가챠 토큰을 가져옵니다
+     * 만약 오늘 가차토큰을 돌리지 않았다면 가챠를 한번 돌린 후 데이터를 가져옵니다.
+     * @param username
+     * @return
+     */
     @Override
     @Transactional
     public TokenDto.TokenRes getGachaToken(String username) {
@@ -51,37 +57,42 @@ public class GachaServiceImpl implements GachaService {
         return new TokenDto.TokenRes(userGachaTokenOptional.get().getToken());
     }
 
+    /**
+     *
+     * 가챠를 플레이합니다
+     * 유저는 오늘 가챠를 할 기회가 남아있다면 유저가 선택한 아티스트의 토큰 중 하나를 볼 수 있습니다.
+     * 가챠를 플레이할 때마다 기회는 감소합니다.
+     * @param username: 유저의 닉네임
+     * @return tokenRes: 해당 가챠 랜덤 토큰 정보
+     */
     @Override
     @Transactional
     public TokenDto.TokenRes playGacha(String username) {
         log.info("[Gacha]: " + username + " play Gacha");
 
         User user = userRepository.findByNickname(username).orElseThrow(() -> new KnuException("유저가 존재하지 않습니다"));
+        UserGachaToken todaysUserGachaToken = userGachaTokenRepository.findByUserAndDate(user, LocalDate.now())
+                .orElse(new UserGachaToken(user, Token.builder().build()));
+        validateChanceCountOver(todaysUserGachaToken);
+        todaysUserGachaToken.playGacha(getRandomToken(user));
 
-        Optional<UserGachaToken> userGachaTokenOptional = userGachaTokenRepository.findByUserAndDate(user, LocalDate.now());
+        log.info("[Gacha]: " + username + " get Gacha token id: {}, chance: ",
+                todaysUserGachaToken.getToken().getId(), todaysUserGachaToken.getChance());
 
-        //가챠 돌리기
-        UserArtist randomUserArtist = userArtistRepository.findRandomUserArtistByUserId(user.getId()).
-                orElseThrow(() -> new KnuException("유저의 아티스트 선택 정보가 없습니다."));
-        Token randomToken = tokenRepository.findRandomTokenByArtistIdAndPaymentStateOnSale(randomUserArtist.getId()).
-                orElseThrow(() -> new KnuException(ResultCode.TOKEN_NOT_FOUND));
+        userGachaTokenRepository.save(todaysUserGachaToken);
+        return new TokenDto.TokenRes(todaysUserGachaToken.getToken());
+    }
 
-        //가차를 처음 돌렸는지?
-        if (userGachaTokenOptional.isEmpty()) {
-            log.info("[Gacha]: " + username + " get First Gacha token id: {}", randomToken.getId());
-            UserGachaToken userGachaToken = new UserGachaToken(user, randomToken);
-            userGachaTokenRepository.save(userGachaToken);
-            return new TokenDto.TokenRes(randomToken);
-        }
-
-        //가챠를 돌릴 수 있는 횟수를 초과했는지?
-        UserGachaToken userGachaToken = userGachaTokenOptional.get();
-        if (userGachaToken.getChance() <= 0) {
+    private void validateChanceCountOver(UserGachaToken todaysUserGachaToken) {
+        if (todaysUserGachaToken.getChance() <= 0) {
             throw new KnuException(ResultCode.GACHA_CHANCE_OVER);
         }
+    }
 
-        log.info("[Gacha]: " + username + " get Gacha token id: {}", randomToken.getId());
-        userGachaToken.playGacha(randomToken);
-        return new TokenDto.TokenRes(randomToken);
+    private Token getRandomToken(User user) {
+        UserArtist randomUserArtist = userArtistRepository.findRandomUserArtistByUserId(user.getId()).
+                orElseThrow(() -> new KnuException("유저의 아티스트 선택 정보가 없습니다."));
+        return tokenRepository.findRandomTokenByArtistIdAndPaymentStateOnSale(randomUserArtist.getId()).
+                orElseThrow(() -> new KnuException(ResultCode.TOKEN_NOT_FOUND));
     }
 }
