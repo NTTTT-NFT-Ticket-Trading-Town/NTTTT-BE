@@ -9,6 +9,7 @@ import com.knu.ntttt_server.token.model.Artist;
 import com.knu.ntttt_server.token.model.Event;
 import com.knu.ntttt_server.token.model.Token;
 import com.knu.ntttt_server.token.repository.TokenRepository;
+import com.knu.ntttt_server.user.service.UserService;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class TokenServiceImpl implements TokenService {
     private final EventService eventService;
     private final ArtistService artistService;
     private final NftService nftService;
+    private final UserService userService;
 
     private final TokenRepository tokenRepository;
     @Value("${nft.contract.owner}")
@@ -63,6 +65,20 @@ public class TokenServiceImpl implements TokenService {
         return res;
     }
 
+    @Override
+    public List<TokenRes> findAllTokenOwnedBy(String nickname) {
+        List<TokenRes> res = new ArrayList<>();
+        String walletAddress = userService.getWalletAddress(nickname);
+        List<Token> tokens = tokenRepository.queryAllByOwner(walletAddress);
+        for (Token t : tokens) {
+            TokenRes queryTokenRes = findBy(t.getId());
+            if (!queryTokenRes.owner().equals(walletAddress)) {
+                continue;
+            }
+            res.add(queryTokenRes);
+        }
+        return res;
+    }
 
     //이벤트의 가장 최신 시퀀스 번호를 불러온다
     //TODO(토큰 발행 시퀀스 관리 로직 리팩토링)

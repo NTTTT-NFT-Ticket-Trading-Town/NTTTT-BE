@@ -1,10 +1,8 @@
 package com.knu.ntttt_server.token.dto;
 
 import com.knu.ntttt_server.token.model.*;
-
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-
 import lombok.Builder;
 import lombok.Getter;
 

@@ -3,7 +3,6 @@ package com.knu.ntttt_server.token.dto;
 import com.knu.ntttt_server.token.model.Artist;
 import com.knu.ntttt_server.token.model.Group;
 import lombok.Builder;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

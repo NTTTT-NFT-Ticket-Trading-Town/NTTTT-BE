@@ -41,4 +41,5 @@ public class TokenController {
   public ApiResponse<Token> createToken(@RequestBody TokenReq req) {
     return ApiResponse.ok(tokenService.createToken(req));
   }
+
 }
