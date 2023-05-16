@@ -30,7 +30,6 @@ public class GachaServiceImpl implements GachaService {
     private final UserGachaTokenRepository userGachaTokenRepository;
     private final TokenRepository tokenRepository;
 
-
     /**
      * 유저의 가챠 토큰을 가져옵니다
      * 만약 오늘 가차토큰을 돌리지 않았다면 가챠를 한번 돌린 후 데이터를 가져옵니다.
