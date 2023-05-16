@@ -64,12 +64,12 @@ public class UserController {
     @Operation(summary = "사용자가 소유한 토큰과 사용자가 선택한 아티스트 조회", description = "nickname을 가진 사용자가 소유한 모든 토큰과, 선택한 아티스트를 조회합니다.")
     @GetMapping("/{nickname}/token")
     public ApiResponse<?> getUserTokenAndArtist(@PathVariable String nickname) {
-        return ApiResponse.ok(userPageService.getUserInfo(nickname));
+        return ApiResponse.ok(userPageService.getTokenAndArtistBy(nickname));
     }
 
     @Operation(summary = "내가 소유한 토큰, 선택한 아티스트 조회", description = "내가 소유한 모든 토큰과, 선택한 아티스트를 조회합니다.")
     @GetMapping("/mypage/token")
     public ApiResponse<?> getMyTokenAndArtist(@CurrentUser User user) {
-        return ApiResponse.ok(userPageService.getUserInfo(user.getUsername()));
+        return ApiResponse.ok(userPageService.getTokenAndArtistBy(user.getUsername()));
     }
 }

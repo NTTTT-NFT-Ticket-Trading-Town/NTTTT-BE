@@ -22,7 +22,7 @@ public class UserPageService {
     private final UserArtistService userArtistService;
     private final UserRepository userRepository;
 
-    public Map<String, Object> getUserInfo(String nickname) {
+    public Map<String, Object> getTokenAndArtistBy(String nickname) {
         if (!userRepository.existsByNickname(nickname)) {
             throw new KnuException(ResultCode.BAD_REQUEST, "해당 닉네임의 유저가 존재하지 않습니다.");
         }
