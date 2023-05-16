@@ -1,14 +1,14 @@
 package com.knu.ntttt_server.token.service;
 
-import com.knu.ntttt_server.token.dto.TokenDto.TokenReq;
-import com.knu.ntttt_server.token.dto.TokenDto.TokenRes;
+import com.knu.ntttt_server.token.dto.TokenDto.CreateTokenReq;
+import com.knu.ntttt_server.token.dto.TokenDto.QueryTokenRes;
 import com.knu.ntttt_server.token.model.Token;
 import java.util.List;
 
 public interface TokenService {
-    Token createToken(TokenReq req);
+    Token createToken(CreateTokenReq req);
 
-    List<TokenRes> findAllBy(Long eventId);
+    List<QueryTokenRes> findAllBy(Long eventId);
 
-    TokenRes findBy(Long tokenId);
+    QueryTokenRes findBy(Long tokenId);
 }

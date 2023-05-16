@@ -10,10 +10,6 @@ nft:
 spring:
   jackson:
     property-naming-strategy: SNAKE_CASE  # request body snake case -> camel case
-  jpa:
-    hibernate:
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
 springdoc:
   swagger-ui:
     path: /swagger-ui.html

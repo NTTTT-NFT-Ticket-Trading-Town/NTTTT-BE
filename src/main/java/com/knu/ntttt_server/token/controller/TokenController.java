@@ -1,7 +1,7 @@
 package com.knu.ntttt_server.token.controller;
 
 import com.knu.ntttt_server.core.response.ApiResponse;
-import com.knu.ntttt_server.token.dto.TokenDto.TokenReq;
+import com.knu.ntttt_server.token.dto.TokenDto.CreateTokenReq;
 import com.knu.ntttt_server.token.model.Token;
 import com.knu.ntttt_server.token.service.TokenService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,7 +38,7 @@ public class TokenController {
 
   @PostMapping("/token")
   @Operation(summary = "토큰 생성", description = "토큰을 생성합니다.")
-  public ApiResponse<Token> createToken(@RequestBody TokenReq req) {
+  public ApiResponse<Token> createToken(@RequestBody CreateTokenReq req) {
     return ApiResponse.ok(tokenService.createToken(req));
   }
 }

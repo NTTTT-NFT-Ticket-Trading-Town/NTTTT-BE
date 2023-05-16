@@ -1,6 +1,10 @@
 package com.knu.ntttt_server.token.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
@@ -15,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Token {
-  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Id @GeneratedValue
   private Long id;
 
   @NotNull @ManyToOne
@@ -40,7 +44,6 @@ public class Token {
   private Long nftId;
 
   @NotNull
-  @Enumerated(EnumType.STRING)
   private PaymentState paymentState = PaymentState.ON_SALE;
 
   @NotNull
