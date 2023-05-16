@@ -1,17 +1,18 @@
 package com.knu.ntttt_server.token.dto;
 
-import com.knu.ntttt_server.token.model.Artist;
-import com.knu.ntttt_server.token.model.Event;
-import com.knu.ntttt_server.token.model.Image;
-import com.knu.ntttt_server.token.model.Token;
+import com.knu.ntttt_server.token.model.*;
+
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 public class TokenDto {
-  public record CreateTokenReq(Long eventId, Long artistId, String imgUrl, String ratio, Long price, String desc) {
-    public CreateTokenReq(Long eventId, Long artistId, String imgUrl, Long price) {
+
+  public record TokenReq(Long eventId, Long artistId, String imgUrl, String ratio, Long price, String desc) {
+    public TokenReq(Long eventId, Long artistId, String imgUrl, Long price) {
       this(eventId, artistId, imgUrl, "", price, "");
     }
 
@@ -35,13 +36,14 @@ public class TokenDto {
     }
   }
 
-  public record QueryTokenRes(Event event, Long id, Image image, Integer seq,
-                              Long price, String desc,
-                              Long nftId, Artist artist, String owner) {
-    public QueryTokenRes(Token token, String owner) {
+  @Builder
+  public record TokenRes(Event event, Long id, Image image, Integer seq,
+                         Long price, String desc,
+                         Long nftId, ArtistDto.ArtistRes artist, String owner) {
+    public TokenRes(Token token) {
       this(token.getEvent(), token.getId(), new Image(token.getImgUrl(), token.getRatio()),
               token.getSeq(), token.getPrice(), token.getDescription(),
-              token.getNftId(), token.getArtist(), owner);
+              token.getNftId(), ArtistDto.ArtistRes.from(token.getArtist()), token.getOwner());
     }
   }
 }

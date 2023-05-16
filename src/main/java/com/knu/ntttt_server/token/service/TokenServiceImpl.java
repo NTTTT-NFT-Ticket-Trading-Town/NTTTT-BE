@@ -3,8 +3,8 @@ package com.knu.ntttt_server.token.service;
 import com.knu.ntttt_server.nft.dto.NftDto.CreateNftReq;
 import com.knu.ntttt_server.nft.dto.NftDto.QueryNftRes;
 import com.knu.ntttt_server.nft.service.NftService;
-import com.knu.ntttt_server.token.dto.TokenDto.CreateTokenReq;
-import com.knu.ntttt_server.token.dto.TokenDto.QueryTokenRes;
+import com.knu.ntttt_server.token.dto.TokenDto.TokenReq;
+import com.knu.ntttt_server.token.dto.TokenDto.TokenRes;
 import com.knu.ntttt_server.token.model.Artist;
 import com.knu.ntttt_server.token.model.Event;
 import com.knu.ntttt_server.token.model.Token;
@@ -31,7 +31,7 @@ public class TokenServiceImpl implements TokenService {
      * 특정 이벤트의 토큰을 발행한다
      */
     @Transactional
-    public Token createToken(CreateTokenReq req) {
+    public Token createToken(TokenReq req) {
         Event event = eventService.findBy(req.eventId());
         Artist artist = artistService.findBy(req.artistId());
         Long nftId = issueNft(req);
@@ -44,17 +44,17 @@ public class TokenServiceImpl implements TokenService {
      */
     @Override
     @Transactional
-    public QueryTokenRes findBy(Long tokenId) {
+    public TokenRes findBy(Long tokenId) {
         Token token = tokenRepository.findById(tokenId)
                 .orElseThrow(() -> new RuntimeException("존재하지 않는 토큰입니다"));
         QueryNftRes res = nftService.queryNft(token.getNftId());
         this.syncTokenWithNft(res, token);
-        return new QueryTokenRes(token, res.owner());
+        return new TokenRes(token);
     }
 
     @Override
-    public List<QueryTokenRes> findAllBy(Long eventId) {
-        List<QueryTokenRes> res = new ArrayList<>();
+    public List<TokenRes> findAllBy(Long eventId) {
+        List<TokenRes> res = new ArrayList<>();
 
         List<Token> tokens = tokenRepository.queryAllByEvent_Id(eventId);
         for (Token t : tokens) {
@@ -70,7 +70,7 @@ public class TokenServiceImpl implements TokenService {
         return event.getQuantity();
     }
 
-    private Long issueNft(CreateTokenReq req) {
+    private Long issueNft(TokenReq req) {
         CreateNftReq nftReq = new CreateNftReq(req.imgUrl(), req.desc());
         return nftService.mintNft(nftReq);
     }
