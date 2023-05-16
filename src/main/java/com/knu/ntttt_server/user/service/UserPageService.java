@@ -2,7 +2,7 @@ package com.knu.ntttt_server.user.service;
 
 import com.knu.ntttt_server.core.exception.KnuException;
 import com.knu.ntttt_server.core.response.ResultCode;
-import com.knu.ntttt_server.token.dto.TokenDto.QueryTokenRes;
+import com.knu.ntttt_server.token.dto.TokenDto.TokenRes;
 import com.knu.ntttt_server.token.service.TokenService;
 import com.knu.ntttt_server.user.dto.UserArtistDto.ChosenArtistRes;
 import com.knu.ntttt_server.user.repository.UserRepository;
@@ -26,7 +26,7 @@ public class UserPageService {
         if (!userRepository.existsByNickname(nickname)) {
             throw new KnuException(ResultCode.BAD_REQUEST, "해당 닉네임의 유저가 존재하지 않습니다.");
         }
-        List<QueryTokenRes> gachaList = tokenService.findAllBy(nickname);
+        List<TokenRes> gachaList = tokenService.findAllBy(nickname);
         List<ChosenArtistRes> categoryList = userArtistService.findChosenArtist(nickname);
         Map<String, Object> data = new HashMap<>();
         data.put("gacha_list", gachaList);
