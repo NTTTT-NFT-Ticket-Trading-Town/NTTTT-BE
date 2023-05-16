@@ -66,7 +66,7 @@ public class TokenServiceImpl implements TokenService {
     }
 
     @Override
-    public List<TokenRes> findAllBy(String nickname) {
+    public List<TokenRes> findAllTokenOwnedBy(String nickname) {
         List<TokenRes> res = new ArrayList<>();
         String walletAddress = userService.getWalletAddress(nickname);
         List<Token> tokens = tokenRepository.queryAllByOwner(walletAddress);

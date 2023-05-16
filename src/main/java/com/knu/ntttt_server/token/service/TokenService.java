@@ -10,7 +10,7 @@ public interface TokenService {
 
     List<TokenRes> findAllBy(Long eventId);
 
-    List<TokenRes> findAllBy(String nickname);
+    List<TokenRes> findAllTokenOwnedBy(String nickname);
 
     TokenRes findBy(Long tokenId);
 
