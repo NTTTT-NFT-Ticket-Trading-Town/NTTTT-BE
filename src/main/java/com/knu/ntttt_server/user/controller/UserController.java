@@ -11,6 +11,7 @@ import com.knu.ntttt_server.user.dto.LoginDto;
 import com.knu.ntttt_server.user.dto.UserArtistDto.ChosenArtistRes;
 import com.knu.ntttt_server.user.dto.UserDto;
 import com.knu.ntttt_server.user.service.UserArtistService;
+import com.knu.ntttt_server.user.service.UserPageService;
 import com.knu.ntttt_server.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,7 +30,7 @@ public class UserController {
 
     private final UserService userService;
     private final UserArtistService userArtistService;
-    private final TokenService tokenService;
+    private final UserPageService userPageService;
 
     @Operation(summary = "회원가입")
     @PostMapping("/join")
@@ -65,18 +66,17 @@ public class UserController {
         return ApiResponse.ok();
     }
 
-    @Operation(summary = "마이페이지", description = "내가 소유한 모든 토큰과, 내가 선택한 아티스트를 조회합니다.")
-    @GetMapping("/mypage")
-    public ApiResponse<?> mypage(@CurrentUser User user) {
-        if (user == null) {
+    @Operation(summary = "사용자 정보 조회", description = "사용자가 소유한 모든 토큰과, 선택한 아티스트를 조회합니다.")
+    @GetMapping({"/mypage", "/{nickname}"})
+    public ApiResponse<?> getInfo(@CurrentUser User user, @PathVariable(required = false) String nickname) {
+        if (nickname != null) {
+            return ApiResponse.ok(userPageService.getUserInfo(nickname));
+        }
+        else if (user != null) {
+            return ApiResponse.ok(userPageService.getUserInfo(user.getUsername()));
+        }
+        else {
             return ApiResponse.error(new KnuException(ResultCode.BAD_REQUEST, "로그인을 해주세요"));
         }
-        List<QueryTokenRes> gachaList = tokenService.findAllBy(user.getUsername());
-        List<ChosenArtistRes> categoryList = userArtistService.findChosenArtist(user.getUsername());
-
-        Map<String, Object> data = new HashMap<>();
-        data.put("gacha_list", gachaList);
-        data.put("category_list", categoryList);
-        return ApiResponse.ok(data);
     }
 }
