@@ -35,7 +35,7 @@ public class UserController {
     }
 
     @Operation(summary = "로그인")
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ApiResponse<?> login(@RequestBody LoginDto dto) {
         String token = userService.login(dto);
         return ApiResponse.ok(token);
