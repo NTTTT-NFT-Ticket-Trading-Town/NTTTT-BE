@@ -7,4 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ArtistRepository extends JpaRepository<Artist, Long> {
     List<Artist> findAllByGroup(Group group);
+
+    List<Artist> findAllByNameContaining(String name);
+
+    List<Artist> findAllByGroupAndNameContaining(Group group, String name);
 }
