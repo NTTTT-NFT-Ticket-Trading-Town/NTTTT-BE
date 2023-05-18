@@ -34,7 +34,7 @@ public class Event {
   }
 
   // 이벤트의 다음 시퀀스 번호를 불러온다
-  public Integer getRecentSequenceNumber() {
+  public Integer getNextSequenceNumber() {
     return ++quantity;
   }
 }
