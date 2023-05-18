@@ -34,10 +34,10 @@ public class TokenServiceImpl implements TokenService {
      */
     @Transactional
     public Token createToken(TokenReq req) {
-        Event event = eventService.findBy(req.eventId());
+        Event event = eventService.findByIdWithLock(req.eventId());
         Artist artist = artistService.findBy(req.artistId());
         Long nftId = issueNft(req);
-        Token token = req.issueToken(getSequence(event), artist, event, nftId, ownerAddress);
+        Token token = req.issueToken(getNextSequence(event), artist, event, nftId, ownerAddress);
         return tokenRepository.save(token);
     }
 
@@ -81,8 +81,7 @@ public class TokenServiceImpl implements TokenService {
     }
 
     //이벤트의 가장 최신 시퀀스 번호를 불러온다
-    //TODO(토큰 발행 시퀀스 관리 로직 리팩토링)
-    private Integer getSequence(Event event) {
+    private Integer getNextSequence(Event event) {
         return event.getQuantity();
     }
 
