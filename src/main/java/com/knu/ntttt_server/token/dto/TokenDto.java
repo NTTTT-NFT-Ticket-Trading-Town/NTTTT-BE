@@ -35,11 +35,11 @@ public class TokenDto {
   }
 
   @Builder
-  public record TokenRes(Event event, Long id, Image image, Integer seq,
+  public record TokenRes(EventDto.EventRes event, Long id, Image image, Integer seq,
                          Long price, String desc,
                          Long nftId, ArtistDto.ArtistRes artist, String owner) {
     public TokenRes(Token token) {
-      this(token.getEvent(), token.getId(), new Image(token.getImgUrl(), token.getRatio()),
+      this(EventDto.EventRes.from(token.getEvent()), token.getId(), new Image(token.getImgUrl(), token.getRatio()),
               token.getSeq(), token.getPrice(), token.getDescription(),
               token.getNftId(), ArtistDto.ArtistRes.from(token.getArtist()), token.getOwner());
     }
