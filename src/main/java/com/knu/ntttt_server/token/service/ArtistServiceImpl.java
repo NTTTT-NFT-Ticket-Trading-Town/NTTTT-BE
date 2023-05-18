@@ -25,7 +25,16 @@ public class ArtistServiceImpl implements ArtistService{
     }
 
     @Override
-    public List<Artist> findAllBy(Group group) {
-        return artistRepository.findAllByGroup(group);
+    public List<Artist> findAllBy(Group group, String name) {
+        if (group == null && name == null) {
+            throw new KnuException("입력값이 잘못되었습니다");
+        }
+
+        if (group == null) {
+            return artistRepository.findAllByNameContaining(name);
+        } else if (name == null) {
+            return artistRepository.findAllByGroup(group);
+        }
+        return artistRepository.findAllByGroupAndNameContaining(group, name);
     }
 }
