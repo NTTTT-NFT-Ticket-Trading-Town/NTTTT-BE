@@ -92,7 +92,7 @@ public class GachaServiceImpl implements GachaService {
     private Token getRandomToken(User user) {
         UserArtist randomUserArtist = userArtistRepository.findRandomUserArtistByUserId(user.getId()).
                 orElseThrow(() -> new KnuException("유저의 아티스트 선택 정보가 없습니다."));
-        return tokenRepository.findRandomTokenByArtistIdAndPaymentStateOnSale(randomUserArtist.getId()).
+        return tokenRepository.findRandomTokenByArtistIdAndPaymentStateOnSale(randomUserArtist.getArtist().getId()).
                 orElseThrow(() -> new KnuException(ResultCode.TOKEN_NOT_FOUND));
     }
 }
