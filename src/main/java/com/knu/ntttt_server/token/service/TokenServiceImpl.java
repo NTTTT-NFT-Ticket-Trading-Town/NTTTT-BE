@@ -82,7 +82,7 @@ public class TokenServiceImpl implements TokenService {
 
     //이벤트의 가장 최신 시퀀스 번호를 불러온다
     private Integer getNextSequence(Event event) {
-        return event.getQuantity();
+        return event.getRecentSequenceNumber();
     }
 
     private Long issueNft(TokenReq req) {
