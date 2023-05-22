@@ -55,4 +55,10 @@ public class UserService {
             .orElseThrow(() -> new KnuException(ResultCode.BAD_REQUEST, "해당 닉네임의 유저를 찾을 수 없습니다"));
         return user.getWalletAddr();
     }
+
+    public User getUserDetail(String nickname) {
+        User user = userRepository.findByNickname(nickname)
+                .orElseThrow(() -> new KnuException(ResultCode.BAD_REQUEST, "해당 닉네임의 유저를 찾을 수 없습니다"));
+        return user;
+    }
 }

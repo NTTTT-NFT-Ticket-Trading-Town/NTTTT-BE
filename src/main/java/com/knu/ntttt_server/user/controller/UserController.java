@@ -52,6 +52,12 @@ public class UserController {
         return ApiResponse.ok();
     }
 
+    @Operation(summary = "유저 정보 불러오기")
+    @GetMapping("/detail")
+    public ApiResponse<?> userDetail(@CurrentUser User user) {
+        return ApiResponse.ok(userService.getUserDetail(user.getUsername()));
+    }
+
     @Operation(summary = "아티스트 선택")
     @PostMapping("/artist")
     public ApiResponse<?> choose(@RequestBody List<ChooseArtistReq> artistList, @CurrentUser User user) {
@@ -60,12 +66,6 @@ public class UserController {
         }
         userArtistService.chooseArtist(artistList, user.getUsername());
         return ApiResponse.ok();
-    }
-
-    @Operation(summary = "사용자가 소유한 토큰과 사용자가 선택한 아티스트 조회", description = "nickname을 가진 사용자가 소유한 모든 토큰과, 선택한 아티스트를 조회합니다.")
-    @GetMapping("/{nickname}/token")
-    public ApiResponse<?> getUserTokenAndArtist(@PathVariable String nickname) {
-        return ApiResponse.ok(userPageService.getTokenAndArtistBy(nickname));
     }
 
     @Operation(summary = "내가 소유한 토큰, 선택한 아티스트 조회", description = "내가 소유한 모든 토큰과, 선택한 아티스트를 조회합니다.")
