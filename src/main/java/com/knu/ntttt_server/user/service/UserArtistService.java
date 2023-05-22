@@ -35,6 +35,10 @@ public class UserArtistService {
         List<UserArtist> userArtistList = new ArrayList<>();
         for (ChooseArtistReq chooseArtistReq : artistIdList) {
             Artist artist = artistService.findBy(chooseArtistReq.artistId());
+
+            if (userArtistRepository.existsByArtistId(artist.getId())) {
+                throw new KnuException(ResultCode.ARTIST_ALREADY_SELECT);
+            }
             userArtistList.add(new UserArtistReq(user, artist).toEntity());
         }
         userArtistRepository.saveAll(userArtistList);
