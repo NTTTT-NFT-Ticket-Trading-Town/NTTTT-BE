@@ -12,6 +12,7 @@ public interface TokenRepository extends JpaRepository<Token, Long> {
 
     List<Token> queryAllByOwner(String walletAddress);
 
-    @Query(value = "SELECT * FROM token t WHERE t.artist_id = :artistId AND t.payment_state = 'ON_SALE' ORDER BY RAND() LIMIT 1", nativeQuery = true)
-    Optional<Token> findRandomTokenByArtistIdAndPaymentStateOnSale(Long artistId);
+    @Query(value = "SELECT t.* FROM user_artist ua JOIN token t ON ua.artist_id = t.artist_id " +
+            "WHERE ua.user_id = :userId AND t.payment_state = 'ON_SALE' ORDER BY RAND() LIMIT 1", nativeQuery = true)
+    Optional<Token> findRandomTokenByUserIdAndPaymentStateOnSale(Long userId);
 }
