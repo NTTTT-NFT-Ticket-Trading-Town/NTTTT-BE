@@ -9,5 +9,7 @@ public interface EventService {
 
     Event findBy(Long eventId);
 
+    Event findByIdWithLock(Long eventId);
+
     List<Event> findAll();
 }

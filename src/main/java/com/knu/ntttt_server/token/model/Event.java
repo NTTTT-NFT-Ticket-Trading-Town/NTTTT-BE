@@ -33,8 +33,8 @@ public class Event {
     this.description = description;
   }
 
-  //TODO(토큰 발행 시퀀스 관리 로직 리팩토링)
-  public Integer getQuantity() {
-    return quantity++;
+  // 이벤트의 다음 시퀀스 번호를 불러온다
+  public Integer getNextSequenceNumber() {
+    return ++quantity;
   }
 }
