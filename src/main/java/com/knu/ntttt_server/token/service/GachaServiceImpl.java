@@ -2,6 +2,7 @@ package com.knu.ntttt_server.token.service;
 
 import com.knu.ntttt_server.core.exception.KnuException;
 import com.knu.ntttt_server.core.response.ResultCode;
+import com.knu.ntttt_server.token.dto.GachaDto;
 import com.knu.ntttt_server.token.dto.TokenDto;
 import com.knu.ntttt_server.token.model.PaymentState;
 import com.knu.ntttt_server.token.model.Token;
@@ -38,7 +39,7 @@ public class GachaServiceImpl implements GachaService {
      */
     @Override
     @Transactional
-    public TokenDto.TokenRes getGachaToken(String username) {
+    public GachaDto.GachaRes getGachaToken(String username) {
         User user = userRepository.findByNickname(username).orElseThrow(() -> new KnuException("유저가 존재하지 않습니다"));
         Optional<UserGachaToken> userGachaTokenOptional = userGachaTokenRepository.findByUserAndDate(user, LocalDate.now());
 
@@ -54,7 +55,7 @@ public class GachaServiceImpl implements GachaService {
         if (userGachaToken.getToken().getPaymentState().equals(PaymentState.PENDING)) {
             throw new KnuException(ResultCode.TOKEN_NOT_FOUND);
         }
-        return new TokenDto.TokenRes(userGachaTokenOptional.get().getToken());
+        return new GachaDto.GachaRes(new TokenDto.TokenRes(userGachaTokenOptional.get().getToken()), userGachaToken.getChance());
     }
 
     /**
@@ -67,7 +68,7 @@ public class GachaServiceImpl implements GachaService {
      */
     @Override
     @Transactional
-    public TokenDto.TokenRes playGacha(String username) {
+    public GachaDto.GachaRes playGacha(String username) {
         log.info("[Gacha]: " + username + " play Gacha");
 
         User user = userRepository.findByNickname(username).orElseThrow(() -> new KnuException("유저가 존재하지 않습니다"));
@@ -80,7 +81,7 @@ public class GachaServiceImpl implements GachaService {
                 todaysUserGachaToken.getToken().getId(), todaysUserGachaToken.getChance());
 
         userGachaTokenRepository.save(todaysUserGachaToken);
-        return new TokenDto.TokenRes(todaysUserGachaToken.getToken());
+        return new GachaDto.GachaRes(new TokenDto.TokenRes(todaysUserGachaToken.getToken()), todaysUserGachaToken.getChance());
     }
 
     private void validateChanceCountOver(UserGachaToken todaysUserGachaToken) {
