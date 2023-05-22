@@ -6,6 +6,7 @@ import com.knu.ntttt_server.core.response.ApiResponse;
 import com.knu.ntttt_server.core.response.ResultCode;
 import com.knu.ntttt_server.user.dto.UserArtistDto.ChooseArtistReq;
 import com.knu.ntttt_server.user.dto.LoginDto;
+import com.knu.ntttt_server.user.dto.UserArtistDto.UserTokenArtistRes;
 import com.knu.ntttt_server.user.dto.UserDto;
 import com.knu.ntttt_server.user.service.UserArtistService;
 import com.knu.ntttt_server.user.service.UserPageService;
@@ -37,7 +38,7 @@ public class UserController {
 
     @Operation(summary = "로그인")
     @PostMapping("/login")
-    public ApiResponse<?> login(@RequestBody LoginDto dto) {
+    public ApiResponse<String> login(@RequestBody LoginDto dto) {
         String token = userService.login(dto);
         return ApiResponse.ok(token);
     }
@@ -54,13 +55,13 @@ public class UserController {
 
     @Operation(summary = "유저 정보 불러오기")
     @GetMapping("/detail")
-    public ApiResponse<?> userDetail(@CurrentUser User user) {
+    public ApiResponse<com.knu.ntttt_server.user.model.User> userDetail(@CurrentUser User user) {
         return ApiResponse.ok(userService.getUserDetail(user.getUsername()));
     }
 
     @Operation(summary = "아티스트 선택")
     @PostMapping("/artist")
-    public ApiResponse<?> choose(@RequestBody List<ChooseArtistReq> artistList, @CurrentUser User user) {
+    public ApiResponse<UserTokenArtistRes> choose(@RequestBody List<ChooseArtistReq> artistList, @CurrentUser User user) {
         if (user == null) {
             return ApiResponse.error(new KnuException(ResultCode.BAD_REQUEST, "로그인을 해주세요"));
         }
@@ -70,7 +71,7 @@ public class UserController {
 
     @Operation(summary = "내가 소유한 토큰, 선택한 아티스트 조회", description = "내가 소유한 모든 토큰과, 선택한 아티스트를 조회합니다.")
     @GetMapping("/mypage/token")
-    public ApiResponse<?> getMyTokenAndArtist(@CurrentUser User user) {
+    public ApiResponse<UserTokenArtistRes> getMyTokenAndArtist(@CurrentUser User user) {
         return ApiResponse.ok(userPageService.getTokenAndArtistBy(user.getUsername()));
     }
 }
