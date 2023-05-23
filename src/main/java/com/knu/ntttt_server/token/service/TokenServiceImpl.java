@@ -54,6 +54,7 @@ public class TokenServiceImpl implements TokenService {
         return new TokenRes(token);
     }
 
+    @Transactional
     @Override
     public List<TokenRes> findAllBy(Long eventId) {
         List<TokenRes> res = new ArrayList<>();
