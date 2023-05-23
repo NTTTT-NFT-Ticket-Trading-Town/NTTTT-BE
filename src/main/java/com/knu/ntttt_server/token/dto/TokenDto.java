@@ -1,5 +1,6 @@
 package com.knu.ntttt_server.token.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.knu.ntttt_server.token.model.*;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -37,11 +38,12 @@ public class TokenDto {
   @Builder
   public record TokenRes(EventDto.EventRes event, Long id, Image image, Integer seq,
                          Long price, String desc,
-                         Long nftId, ArtistDto.ArtistRes artist, String owner) {
+                         Long nftId, ArtistDto.ArtistRes artist, String owner,
+                         @JsonProperty("payment_state") PaymentState paymentState) {
     public TokenRes(Token token) {
       this(EventDto.EventRes.from(token.getEvent()), token.getId(), new Image(token.getImgUrl(), token.getRatio()),
               token.getSeq(), token.getPrice(), token.getDescription(),
-              token.getNftId(), ArtistDto.ArtistRes.from(token.getArtist()), token.getOwner());
+              token.getNftId(), ArtistDto.ArtistRes.from(token.getArtist()), token.getOwner(), token.getPaymentState());
     }
   }
 }
