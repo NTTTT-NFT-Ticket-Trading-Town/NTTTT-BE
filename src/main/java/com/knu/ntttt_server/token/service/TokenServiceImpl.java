@@ -50,7 +50,7 @@ public class TokenServiceImpl implements TokenService {
         Token token = tokenRepository.findById(tokenId)
                 .orElseThrow(() -> new RuntimeException("존재하지 않는 토큰입니다"));
         QueryNftRes res = nftService.queryNft(token.getNftId());
-        this.syncTokenWithNft(res, token);
+        //this.syncTokenWithNft(res, token);
         return new TokenRes(token);
     }
 
@@ -65,6 +65,7 @@ public class TokenServiceImpl implements TokenService {
         return res;
     }
 
+    @Transactional
     @Override
     public List<TokenRes> findAllTokenOwnedBy(String nickname) {
         List<TokenRes> res = new ArrayList<>();
@@ -72,9 +73,9 @@ public class TokenServiceImpl implements TokenService {
         List<Token> tokens = tokenRepository.queryAllByOwner(walletAddress);
         for (Token t : tokens) {
             TokenRes queryTokenRes = findBy(t.getId());
-//            if (!queryTokenRes.owner().equals(walletAddress)) {
-//                continue;
-//            }
+            if (!queryTokenRes.owner().equals(walletAddress)) {
+                continue;
+            }
             res.add(queryTokenRes);
         }
         return res;
