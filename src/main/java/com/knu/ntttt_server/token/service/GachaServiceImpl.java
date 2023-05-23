@@ -49,9 +49,6 @@ public class GachaServiceImpl implements GachaService {
 
         UserGachaToken userGachaToken = userGachaTokenOptional.get();
 
-        if (userGachaToken.getToken().getPaymentState().equals(PaymentState.SOLD_OUT)) {
-            throw new KnuException(ResultCode.TOKEN_SOLD_OUT);
-        }
         if (userGachaToken.getToken().getPaymentState().equals(PaymentState.PENDING)) {
             throw new KnuException(ResultCode.TOKEN_NOT_FOUND);
         }
