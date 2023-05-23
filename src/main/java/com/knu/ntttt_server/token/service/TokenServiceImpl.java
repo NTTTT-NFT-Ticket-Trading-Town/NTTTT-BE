@@ -72,9 +72,9 @@ public class TokenServiceImpl implements TokenService {
         List<Token> tokens = tokenRepository.queryAllByOwner(walletAddress);
         for (Token t : tokens) {
             TokenRes queryTokenRes = findBy(t.getId());
-            if (!queryTokenRes.owner().equals(walletAddress)) {
-                continue;
-            }
+//            if (!queryTokenRes.owner().equals(walletAddress)) {
+//                continue;
+//            }
             res.add(queryTokenRes);
         }
         return res;
