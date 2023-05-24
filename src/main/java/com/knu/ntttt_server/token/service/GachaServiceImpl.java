@@ -80,7 +80,7 @@ public class GachaServiceImpl implements GachaService {
     }
 
     @Override
-    public Integer getUserNumberSeeingSameToken(Long tokenId) {
+    public Long getUserNumberSeeingSameToken(Long tokenId) {
         return userGachaTokenRepository.countByToken_Id(tokenId);
     }
 

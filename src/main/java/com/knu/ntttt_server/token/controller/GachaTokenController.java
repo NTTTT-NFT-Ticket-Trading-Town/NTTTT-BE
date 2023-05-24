@@ -34,7 +34,7 @@ public class GachaTokenController {
 
     @Operation(summary = "같은 토큰을 뽑은 유저의 수를 조회.", description = "같은 토큰을 뽑은 유저의 수를 조회합니다.")
     @GetMapping("/{tokenId}")
-    public ApiResponse<Integer> getUserNumberSeeingSameToken(@PathVariable Long tokenId) {
+    public ApiResponse<Long> getUserNumberSeeingSameToken(@PathVariable Long tokenId) {
         return ApiResponse.ok(gachaService.getUserNumberSeeingSameToken(tokenId));
     }
 }
