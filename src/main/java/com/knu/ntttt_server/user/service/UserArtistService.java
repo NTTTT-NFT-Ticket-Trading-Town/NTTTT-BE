@@ -37,7 +37,7 @@ public class UserArtistService {
             Artist artist = artistService.findBy(chooseArtistReq.artistId());
 
             if (userArtistRepository.existsByArtistId(artist.getId())) {
-                throw new KnuException(ResultCode.ARTIST_ALREADY_SELECT);
+                continue;
             }
             userArtistList.add(new UserArtistReq(user, artist).toEntity());
         }
