@@ -2,7 +2,7 @@ package com.knu.ntttt_server.token.model;
 
 public enum Group {
     BTS(Publisher.HIVE), LE_SSERAFIM(Publisher.HIVE),
-    Aespa(Publisher.SM);
+    Aespa(Publisher.SM), NewJeans(Publisher.HIVE), BLACKPINK(Publisher.YG);
 
     public final Publisher publisher;
 
