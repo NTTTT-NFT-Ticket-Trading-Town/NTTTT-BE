@@ -16,6 +16,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -29,7 +30,8 @@ public class UserArtistService {
     /**
      * user가 선호하는 artist를 선택하는 기능입니다.
      */
-    public void chooseArtist(List<ChooseArtistReq> artistIdList, String nickname) {
+    @Transactional
+    public List<UserArtist> chooseArtist(List<ChooseArtistReq> artistIdList, String nickname) {
         User user = userRepository.findByNickname(nickname)
             .orElseThrow(() -> new KnuException(ResultCode.BAD_REQUEST, "해당 닉네임의 유저를 찾을 수 없습니다"));
         List<UserArtist> userArtistList = new ArrayList<>();
@@ -39,7 +41,7 @@ public class UserArtistService {
             Artist artist = artistService.findBy(chooseArtistReq.artistId());
             userArtistList.add(new UserArtistReq(user, artist).toEntity());
         }
-        userArtistRepository.saveAll(userArtistList);
+        return userArtistRepository.saveAll(userArtistList);
     }
 
     /**
