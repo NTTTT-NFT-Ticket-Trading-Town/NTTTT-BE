@@ -8,6 +8,7 @@ import com.knu.ntttt_server.user.dto.UserArtistDto.ChooseArtistReq;
 import com.knu.ntttt_server.user.dto.LoginDto;
 import com.knu.ntttt_server.user.dto.UserArtistDto.UserTokenArtistRes;
 import com.knu.ntttt_server.user.dto.UserDto;
+import com.knu.ntttt_server.user.model.UserArtist;
 import com.knu.ntttt_server.user.service.UserArtistService;
 import com.knu.ntttt_server.user.service.UserPageService;
 import com.knu.ntttt_server.user.service.UserService;
@@ -61,12 +62,11 @@ public class UserController {
 
     @Operation(summary = "아티스트 선택")
     @PostMapping("/artist")
-    public ApiResponse<UserTokenArtistRes> choose(@RequestBody List<ChooseArtistReq> artistList, @CurrentUser User user) {
+    public ApiResponse<List<UserArtist>> choose(@RequestBody List<ChooseArtistReq> artistList, @CurrentUser User user) {
         if (user == null) {
             return ApiResponse.error(new KnuException(ResultCode.BAD_REQUEST, "로그인을 해주세요"));
         }
-        userArtistService.chooseArtist(artistList, user.getUsername());
-        return ApiResponse.ok();
+        return ApiResponse.ok(userArtistService.chooseArtist(artistList, user.getUsername()));
     }
 
     @Operation(summary = "내가 소유한 토큰, 선택한 아티스트 조회", description = "내가 소유한 모든 토큰과, 선택한 아티스트를 조회합니다.")
