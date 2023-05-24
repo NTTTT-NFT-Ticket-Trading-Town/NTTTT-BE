@@ -81,7 +81,7 @@ public class GachaServiceImpl implements GachaService {
 
     @Override
     public Integer getUserNumberSeeingSameToken(Long tokenId) {
-        return userGachaTokenRepository.findAllByToken_Id(tokenId).size();
+        return userGachaTokenRepository.countByToken_Id(tokenId);
     }
 
     private void validateChanceCountOver(UserGachaToken todaysUserGachaToken) {
