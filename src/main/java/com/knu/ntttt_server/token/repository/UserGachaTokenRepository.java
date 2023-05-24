@@ -11,5 +11,5 @@ import java.util.Optional;
 public interface UserGachaTokenRepository extends JpaRepository<UserGachaToken, Long> {
     Optional<UserGachaToken> findByUserAndDate(User user, LocalDate date);
 
-    List<UserGachaToken> findAllByToken_Id(Long tokenId);
+    Integer countByToken_Id(Long tokenId);
 }
