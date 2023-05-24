@@ -33,12 +33,10 @@ public class UserArtistService {
         User user = userRepository.findByNickname(nickname)
             .orElseThrow(() -> new KnuException(ResultCode.BAD_REQUEST, "해당 닉네임의 유저를 찾을 수 없습니다"));
         List<UserArtist> userArtistList = new ArrayList<>();
+
+        userArtistRepository.deleteAllByUser_Id(user.getId());
         for (ChooseArtistReq chooseArtistReq : artistIdList) {
             Artist artist = artistService.findBy(chooseArtistReq.artistId());
-
-            if (userArtistRepository.existsByArtistId(artist.getId())) {
-                continue;
-            }
             userArtistList.add(new UserArtistReq(user, artist).toEntity());
         }
         userArtistRepository.saveAll(userArtistList);
