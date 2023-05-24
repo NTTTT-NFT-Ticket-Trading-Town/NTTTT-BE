@@ -3,7 +3,6 @@ package com.knu.ntttt_server.token.controller;
 import com.knu.ntttt_server.core.annotation.CurrentUser;
 import com.knu.ntttt_server.core.response.ApiResponse;
 import com.knu.ntttt_server.token.dto.GachaDto;
-import com.knu.ntttt_server.token.dto.TokenDto;
 import com.knu.ntttt_server.token.service.GachaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -31,5 +30,11 @@ public class GachaTokenController {
     @PostMapping()
     public ApiResponse<GachaDto.GachaRes> playGacha(@CurrentUser User user) {
         return ApiResponse.ok(gachaService.playGacha(user.getUsername()));
+    }
+
+    @Operation(summary = "같은 토큰을 뽑은 유저의 수를 조회.", description = "같은 토큰을 뽑은 유저의 수를 조회합니다.")
+    @GetMapping("/{tokenId}")
+    public ApiResponse<Integer> getUserNumberSeeingSameToken(@PathVariable Long tokenId) {
+        return ApiResponse.ok(gachaService.getUserNumberSeeingSameToken(tokenId));
     }
 }

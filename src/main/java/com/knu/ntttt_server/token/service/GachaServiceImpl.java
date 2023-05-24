@@ -10,11 +10,9 @@ import com.knu.ntttt_server.token.model.UserGachaToken;
 import com.knu.ntttt_server.token.repository.TokenRepository;
 import com.knu.ntttt_server.token.repository.UserGachaTokenRepository;
 import com.knu.ntttt_server.user.model.User;
-import com.knu.ntttt_server.user.model.UserArtist;
 import com.knu.ntttt_server.user.repository.UserArtistRepository;
 import com.knu.ntttt_server.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -79,6 +77,11 @@ public class GachaServiceImpl implements GachaService {
 
         userGachaTokenRepository.save(todaysUserGachaToken);
         return new GachaDto.GachaRes(new TokenDto.TokenRes(todaysUserGachaToken.getToken()), todaysUserGachaToken.getChance());
+    }
+
+    @Override
+    public Integer getUserNumberSeeingSameToken(Long tokenId) {
+        return userGachaTokenRepository.findAllByToken_Id(tokenId).size();
     }
 
     private void validateChanceCountOver(UserGachaToken todaysUserGachaToken) {
