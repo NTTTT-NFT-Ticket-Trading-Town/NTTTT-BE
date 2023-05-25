@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserGachaToken {
 
-    private static final int DEFAULT_CHANCE_NUMBER = 5;
+    private static final int DEFAULT_CHANCE_NUMBER = 100;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
