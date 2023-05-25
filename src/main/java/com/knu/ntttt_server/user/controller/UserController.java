@@ -32,9 +32,8 @@ public class UserController {
 
     @Operation(summary = "회원가입")
     @PostMapping("/join")
-    public ApiResponse<?> join(@RequestBody UserDto dto) {
-        userService.join(dto);
-        return ApiResponse.ok();
+    public ApiResponse<String> join(@RequestBody UserDto dto) {
+        return ApiResponse.ok(userService.join(dto));
     }
 
     @Operation(summary = "로그인")

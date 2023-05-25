@@ -26,12 +26,13 @@ public class UserService {
      * 회원 가입 기능입니다.
      */
     @Transactional
-    public void join(UserDto dto) {
+    public String join(UserDto dto) {
         if (userRepository.existsByNickname(dto.getNickname())) {
             throw new KnuException(ResultCode.BAD_REQUEST, "아이디가 중복입니다.");
         }
         User user = dto.toEntityWithEncode(passwordEncoder);
         userRepository.save(user);
+        return jwtService.createToken(dto.getNickname());
     }
 
     /**
