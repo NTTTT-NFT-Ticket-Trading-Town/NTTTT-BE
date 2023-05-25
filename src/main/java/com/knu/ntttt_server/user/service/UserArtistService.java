@@ -13,9 +13,12 @@ import com.knu.ntttt_server.user.repository.UserArtistRepository;
 import com.knu.ntttt_server.user.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -29,17 +32,35 @@ public class UserArtistService {
     /**
      * user가 선호하는 artist를 선택하는 기능입니다.
      */
-    public void chooseArtist(List<ChooseArtistReq> artistIdList, String nickname) {
+    @Transactional
+    public List<UserArtist> chooseArtist(List<ChooseArtistReq> artistIdList, String nickname) {
         User user = userRepository.findByNickname(nickname)
-            .orElseThrow(() -> new KnuException(ResultCode.BAD_REQUEST, "해당 닉네임의 유저를 찾을 수 없습니다"));
-        List<UserArtist> userArtistList = new ArrayList<>();
+                .orElseThrow(() -> new KnuException(ResultCode.BAD_REQUEST, "해당 닉네임의 유저를 찾을 수 없습니다"));
+        List<UserArtist> userArtistList = userArtistRepository.findAllByUserId(user.getId());
 
-        userArtistRepository.deleteAllByUser_Id(user.getId());
+        Set<Long> prevSelectedArtistId = userArtistList.stream()
+                .map(userArtist -> userArtist.getArtist().getId())
+                .collect(Collectors.toSet());
+
+        Set<Long> curSelectedArtistId = artistIdList.stream()
+                .map(ChooseArtistReq::artistId)
+                .collect(Collectors.toSet());
+
+        List<UserArtist> toDelete = userArtistList.stream()
+                .filter(userArtist -> !curSelectedArtistId.contains(userArtist.getArtist().getId()))
+                .collect(Collectors.toList());
+
+        List<UserArtist> toSave = new ArrayList<>();
         for (ChooseArtistReq chooseArtistReq : artistIdList) {
+            if (prevSelectedArtistId.contains(chooseArtistReq.artistId())) {
+                continue;
+            }
             Artist artist = artistService.findBy(chooseArtistReq.artistId());
-            userArtistList.add(new UserArtistReq(user, artist).toEntity());
+            toSave.add(new UserArtistReq(user, artist).toEntity());
         }
-        userArtistRepository.saveAll(userArtistList);
+
+        userArtistRepository.deleteAll(toDelete);
+        return userArtistRepository.saveAll(toSave);
     }
 
     /**

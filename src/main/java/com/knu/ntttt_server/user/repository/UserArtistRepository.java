@@ -19,6 +19,4 @@ public interface UserArtistRepository extends JpaRepository<UserArtist, Long> {
     
     @Query(value = "SELECT * FROM user_artist ut WHERE ut.user_id = :userId ORDER BY RAND() LIMIT 1", nativeQuery = true)
     Optional<UserArtist> findRandomUserArtistByUserId(Long userId);
-
-    void deleteAllByUser_Id(Long userId);
 }
