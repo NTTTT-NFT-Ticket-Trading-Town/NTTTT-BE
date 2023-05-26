@@ -30,6 +30,9 @@ public class UserService {
         if (userRepository.existsByNickname(dto.getNickname())) {
             throw new KnuException(ResultCode.BAD_REQUEST, "아이디가 중복입니다.");
         }
+        if (userRepository.existsByWalletAddr(dto.getNickname())) {
+            throw new KnuException(ResultCode.BAD_REQUEST, "지갑 주소가 중복입니다.");
+        }
         User user = dto.toEntityWithEncode(passwordEncoder);
         userRepository.save(user);
     }
