@@ -1,13 +1,8 @@
 package com.knu.ntttt_server.token.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,40 +15,62 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Token {
-    @Id @GeneratedValue
-    private Long id;
+  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @NotNull
-    @ManyToOne @JoinColumn(name = "event_id")
-    @Enumerated(value = EnumType.STRING)
-    private Event event;
-    @NotNull
-    private Long seq;
+  @NotNull @ManyToOne
+  @JoinColumn(name = "event_id")
+  private Event event;
+  @NotNull
+  private Integer seq;
+  @NotNull
+  private String imgUrl;
 
-    @NotNull
-    private String imgUrl;
-    @NotNull
-    private Long price;
-    private String desc;
+  @NotNull
+  private String ratio = " ";
 
-    @NotNull
-    private Long nftId;
-    @NotNull
-    private String owner;
+  @ManyToOne @NotNull
+  private Artist artist;
+  
+  @NotNull
+  private Long price;
+  private String description;
 
-    @NotNull
-    private PaymentState paymentState = PaymentState.ON_SALE;
+  @NotNull
+  private Long nftId;
 
-    @Builder
-    public Token(Event event, Long seq, String imgUrl, Long price,
-                 String desc, Long nftId, String owner, PaymentState paymentState) {
-        this.event = event;
-        this.seq = seq;
-        this.imgUrl = imgUrl;
-        this.price = price;
-        this.desc = desc;
-        this.nftId = nftId;
-        this.owner = owner;
-        this.paymentState = paymentState;
-    }
+  @NotNull
+  @Enumerated(EnumType.STRING)
+  private PaymentState paymentState = PaymentState.ON_SALE;
+
+  @NotNull
+  private LocalDateTime publishedAt;
+
+  @NotNull
+  private String owner;
+
+  @Builder
+  public Token(Event event, Integer seq, String imgUrl, String ratio, Artist artist, Long price, String description, Long nftId, LocalDateTime publishedAt, String owner){
+    this.event = event;
+    this.seq = seq;
+    this.imgUrl = imgUrl;
+    this.ratio = ratio;
+    this.artist = artist;
+    this.price = price;
+    this.description = description;
+    this.nftId = nftId;
+    this.publishedAt = publishedAt;
+    this.owner = owner;
+  }
+
+  public void soldOut() {
+    this.paymentState = PaymentState.SOLD_OUT;
+  }
+
+  /**
+   * 토큰 소유자 변경
+   */
+  public void changeOwner(String newWalletAddr) {
+    this.owner = newWalletAddr;
+  }
 }

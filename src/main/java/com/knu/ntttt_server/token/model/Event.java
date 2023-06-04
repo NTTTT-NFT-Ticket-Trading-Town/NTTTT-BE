@@ -1,8 +1,6 @@
 package com.knu.ntttt_server.token.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -17,22 +15,26 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Event {
-    @Id @GeneratedValue
-    private Long id;
+  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+  @NotNull
+  private String name;
+  @NotNull @Enumerated(EnumType.STRING)
+  private Publisher publisher;
+  @NotNull
+  private Integer quantity;
+  private String description;
 
-    @NotNull
-    private String name;
-    @NotNull
-    private Publisher publisher;
-    @NotNull
-    private Integer quantity;
-    private String desc;
+  @Builder
+  public Event(String name, Publisher publisher, Integer quantity, String description) {
+    this.name = name;
+    this.publisher = publisher;
+    this.quantity = quantity;
+    this.description = description;
+  }
 
-    @Builder
-    public Event(String name, Publisher publisher, Integer quantity, String desc) {
-        this.name = name;
-        this.publisher = publisher;
-        this.quantity = quantity;
-        this.desc = desc;
-    }
+  // 이벤트의 다음 시퀀스 번호를 불러온다
+  public Integer getNextSequenceNumber() {
+    return ++quantity;
+  }
 }
